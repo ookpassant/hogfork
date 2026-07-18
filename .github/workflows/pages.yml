@@ -2,7 +2,7 @@ name: Deploy prototype to Pages
 
 on:
   push:
-    branches: [claude/posthog-forum-improvements-r6czcz]
+    branches: [main]
   workflow_dispatch:
 
 permissions:

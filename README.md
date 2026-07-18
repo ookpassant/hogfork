@@ -1,47 +1,44 @@
 # hogfork
 
-A workspace for reimagining the **PostHog community forum** ([posthog.com/questions](https://posthog.com/questions)) — moving it from *support desk* toward *community*, and turning that into a real contribution to [PostHog/posthog.com](https://github.com/PostHog/posthog.com).
+A little workspace for reimagining the PostHog community forum ([posthog.com/questions](https://posthog.com/questions)).
 
-This repo is deliberately separate from other projects. It holds the design concept, the rationale, and the draft changes. The actual pull request will be opened from a proper fork of `posthog.com` (GitHub only allows PRs between a fork and its upstream).
+The idea is simple. Move it from feeling like a support desk toward feeling like a community, and turn that into a real contribution back to [PostHog/posthog.com](https://github.com/PostHog/posthog.com).
 
----
+I kept this separate from my other work on purpose. It holds the design concept, the thinking behind it, and the draft changes. The actual pull request will come from a proper fork of posthog.com, since GitHub only lets you open one between a fork and its upstream.
 
 ## The idea
 
-The forum today is framed like a helpdesk: you **"Ask a question,"** posts carry statuses like *needs-response*, and product topics lead. But the thing that makes a community a *place* — people recognising each other, wandering in to talk, belonging — is underplayed. Two moves fix most of that, and neither needs a backend change.
+Right now the forum is framed like a helpdesk. You "Ask a question," threads carry statuses like needs-response, and product topics lead. That works for triage. But the communities that really stick feel like a place you belong to, and that's the part I want to bring forward. Two small moves do most of the work, and neither one needs a backend change.
 
-### Bet 1 — grow the conversation
-Shift the voice from triage to talk, and make it unmistakable that this is a community, not a support queue.
-- **"Ask a question" → "Start a discussion."** Window title **"Questions" → "Community discussions."**
-- **Community-first boards:** real conversation topics up top — `#introductions`, `#show-and-tell`, `#war-stories`, `#build-in-public`, `#where-in-the-world`, `#the-pub` (the boring `#devrel` is gone). Product topics sit under a **"Product talk"** heading, one glance down.
-- **Support has its own door, loudly:** a welcome banner ("This isn't a support queue — hit a wall? → Talk to a human"), a "need it fixed fast?" escape on the Product-talk bar, and a sidebar pointer. Nobody mistakes the vibe.
+### Bet 1: grow the conversation
 
-### Bet 2 — spotlight the people (the old-forum way)
-PostHog **already ships** a gamified contributor ladder — it's just buried.
-`Hoglet → Hogthusiast → PowerHog → TopHog → ElderHog → Hogfather`
-(see `src/components/Squeak/util/getLevel.ts`). The level badge renders *inside a thread* (`PowerHog · 142`) but nowhere you'd notice.
-- Rank does **not** clutter the topic list — just like an old ProBoards/phpBB board, where your rank lived under your avatar in a post, never in the index. Names stay clean.
-- A **"Top hogs this week"** spotlight (its own little desktop window) surfaces the whole ladder — name, rank, points — so contributors actually get *seen*. This is literally the community role's second bet, and it uses points/levels that **already exist** in the code.
+Soften the voice from triage to talk, and make it clear this is a community, not a support queue.
 
-### The look — ProBoards nostalgia, PostHog skin
-The refit leans on what made early-2000s boards feel like a *place*, rebuilt in PostHog's current "PostHog OS" design (the draggable window on the illustrated desktop, cream + orange, real level colours): **coloured category bars**, folder/status icons, "Last post by… ↪" jump arrows, and a "128 hogs browsing" footer.
+- "Ask a question" becomes "Start a discussion." The window title "Questions" becomes "Community discussions."
+- Community boards come first: #introductions, #build-in-public, #war-stories, #where-in-the-world, #the-pub. Product topics sit just below, under "Product talk."
+- Support gets its own clear door. A gentle line saying that chatting through a bug is welcome, but if you just need it fixed, support lives over there. So the two intents stop competing for the same frame.
 
----
+### Bet 2: spotlight the people
+
+PostHog already ships a contributor level ladder. It's just hidden. Hoglet, Hogthusiast, PowerHog, TopHog, ElderHog, Hogfather (see `src/components/Squeak/util/getLevel.ts`). The badge shows up inside a thread, but nowhere you'd really notice.
+
+- Rank stays out of the topic list, the way the old forums did it. Your rank lived under your avatar in a post, never in the index. Names stay clean.
+- A "Top hogs this week" spotlight brings the ladder into view (name, rank, points) so the people who help actually get seen. It leans on points that already exist in the code.
+
+### The look
+
+I leaned on what made the early-2000s boards feel like a place, rebuilt in PostHog's current look (the PostHog OS window, the cream and orange, the real level colours). Coloured category bars, folder icons, a "last post" jump arrow, and a "who's browsing" footer.
 
 ## The prototype
 
-[`prototype/community-redesign.html`](prototype/community-redesign.html) — a self-contained concept built on PostHog's real design language (the "PostHog OS" desktop, the window chrome, their palette, and the real `getLevel` badge colours). Open it in a browser. Toggle **"highlight what changed"** (bottom-left) to see every proposed change outlined against the real page, each tagged with the bet it serves.
-
-It's a concept, not the live site — the hedgehog wallpaper is approximated, and dock icons are stand-ins.
-
----
+[`prototype/community-redesign.html`](prototype/community-redesign.html) is a self-contained concept. Open it in a browser. There's a "highlight what changed" toggle so you can see exactly what's touched against the live page. Everything in it (names, posts, points) is made-up sample data.
 
 ## Status
 
-- [x] Explore the real forum + Squeak components
+- [x] Explore the real forum and its Squeak components
 - [x] Concept prototype on the real PostHog OS layout
-- [ ] Lock PR scope (see [`docs/PLAN.md`](docs/PLAN.md))
-- [ ] Fork `PostHog/posthog.com`, build the diff, keep `npm run build` green
+- [ ] Lock the scope (see [`docs/PLAN.md`](docs/PLAN.md))
+- [ ] Fork posthog.com, build the diff, keep `npm run build` green
 - [ ] Open the PR
 
-See [`docs/PLAN.md`](docs/PLAN.md) for the change-by-change mapping to real components and the proposed PR slices.
+See [`docs/PLAN.md`](docs/PLAN.md) for how each change maps to the real posthog.com code, and the order I'd ship them in.
