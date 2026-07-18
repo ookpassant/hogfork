@@ -27,10 +27,7 @@ Small first, so it merges; the rest as fast follow-ups. (Rank badges are deliber
 - Presentational; reads from the topics that already exist.
 
 ### PR 3 — contributor spotlight ("Top hogs")
-- A small module surfacing top contributors by their existing points/levels (`getLevel.ts`). Uses data that's already there — no new fields.
-
-### Later — signatures
-- A per-profile `signature` line under posts. Needs a **profile field on the Strapi backend**, so it's a bigger, separate change — worth doing, not the opening move.
+- A small module surfacing top contributors by their existing points/levels (`getLevel.ts`) — name, rank, points. Uses data that's already there, no new fields.
 
 ## PostHog-native touches (worth doing, signals fit)
 - **Gate behind a PostHog feature flag** so it can be rolled out / killed remotely.

@@ -21,11 +21,10 @@ PostHog **already ships** a gamified contributor ladder — it's just buried.
 `Hoglet → Hogthusiast → PowerHog → TopHog → ElderHog → Hogfather`
 (see `src/components/Squeak/util/getLevel.ts`). The level badge renders *inside a thread* (`PowerHog · 142`) but nowhere you'd notice.
 - Rank does **not** clutter the topic list — just like an old ProBoards/phpBB board, where your rank lived under your avatar in a post, never in the index. Names stay clean.
-- A **"Top hogs this week"** spotlight (its own little desktop window) surfaces the whole ladder, so contributors actually get *seen* — literally the community role's second bet.
-- **Signatures** give everyone a scrap of identity under a post. (Note: needs a `signature` profile field — a small backend add, so it's a follow-up, not the first PR.)
+- A **"Top hogs this week"** spotlight (its own little desktop window) surfaces the whole ladder — name, rank, points — so contributors actually get *seen*. This is literally the community role's second bet, and it uses points/levels that **already exist** in the code.
 
 ### The look — ProBoards nostalgia, PostHog skin
-The refit leans on what made early-2000s boards feel like a *place*, rebuilt in PostHog's current "PostHog OS" design (the draggable window on the illustrated desktop, cream + orange, real level colours): **coloured category bars**, folder/status icons, "Last post by… ↪" jump arrows, signature divider rules, and a "128 hogs browsing" footer.
+The refit leans on what made early-2000s boards feel like a *place*, rebuilt in PostHog's current "PostHog OS" design (the draggable window on the illustrated desktop, cream + orange, real level colours): **coloured category bars**, folder/status icons, "Last post by… ↪" jump arrows, and a "128 hogs browsing" footer.
 
 ---
 

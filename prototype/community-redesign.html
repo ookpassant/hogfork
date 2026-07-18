@@ -71,7 +71,7 @@
   .titlebar .t{font-size:12.5px;font-weight:700;color:var(--text-2);margin-left:4px;}
   .titlebar .ctrls{margin-left:auto;display:flex;gap:14px;color:var(--muted-2);font-size:13px;}
 
-  .winbody{display:grid;grid-template-columns:220px 1fr;height:642px;}
+  .winbody{display:grid;grid-template-columns:220px 1fr;height:590px;}
   @media(max-width:640px){.winbody{grid-template-columns:1fr;height:auto;}}
 
   /* in-window sidebar */
@@ -100,7 +100,6 @@
   .trow .su .txt{font-size:13.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
   .trow:hover .su .txt{color:var(--red);}
   :root[data-theme="dark"] .trow:hover .su .txt{color:var(--yellow);}
-  .trow .su .sig{font-size:11.5px;color:var(--text-3);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-top:3px;}
   .trow .rp{font-size:13px;color:var(--text-2);text-align:center;font-variant-numeric:tabular-nums;}
   .trow .rp.new{color:var(--red);font-weight:700;}
   :root[data-theme="dark"] .trow .rp.new{color:var(--yellow);}
@@ -122,9 +121,8 @@
   .hog:hover{background:var(--win-2);}
   .hog .rk{font-size:12px;color:var(--muted-2);font-variant-numeric:tabular-nums;}
   .hog .av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:12px;}
-  .hog .who{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:6px;}
-  .hog .sig{font-size:11.5px;color:var(--text-3);font-style:italic;margin-top:1px;}
-  .hog .pts{font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums;}
+  .hog .who{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .hog .pts{font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums;white-space:nowrap;}
   .ladder{border-left:1px solid var(--line);padding:14px 16px;}
   .ladder h6{margin:0 0 9px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);}
   .ladder .r{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;}
@@ -160,9 +158,6 @@
   .trow .la{position:relative;padding-right:18px;}
   .trow .la .jump{position:absolute;right:0;top:0;color:var(--red);font-weight:700;}
   :root[data-theme="dark"] .trow .la .jump{color:var(--yellow);}
-
-  /* signature: little divider rule above, like an old forum sig */
-  .trow .su .sig{border-top:1px solid var(--line);padding-top:3px;display:inline-block;max-width:100%;}
 
   /* sidebar support pointer */
   .support-note{margin:16px 2px 4px;border:1px dashed var(--line-2);border-radius:8px;padding:9px 10px;background:var(--win-2);}
@@ -219,8 +214,8 @@
         <span class="t changed" data-note='was: “Questions”'>🦔 Community discussions</span>
         <span class="ctrls"><span>▢</span><span>✕</span></span>
       </div>
-      <div class="banner changed" data-note="Bet 1: makes it obvious — community, not a support queue">
-        <span class="txt"><b>👋 You're in the community.</b> Introduce yourself, show what you built, swap war stories. This isn't a support queue — hit a wall on your own project?</span>
+      <div class="banner changed" data-note="Bet 1: bugs welcome as chat — but support lives elsewhere">
+        <span class="txt"><b>👋 You're in the community.</b> Chat through a bug, show what you built, swap war stories — all fair game. Just need it fixed? Support isn't here — it's over there →</span>
         <span class="to"><button class="btn sm"><span class="face">🧑‍💻 Talk to a human</span></button></span>
       </div>
       <div class="winbody">
@@ -291,14 +286,14 @@
 
           <div class="trow">
             <span class="au"><span class="st"></span><span class="nm">Raquel Smith</span></span>
-            <span class="su"><span class="txt">Pre-offsite hangs in Athens 🇬🇷</span><span class="sig changed" data-note="Bet 2: signatures, the old-forum way">— “kindness &gt; growth”</span></span>
+            <span class="su"><span class="txt">Pre-offsite hangs in Athens 🇬🇷</span></span>
             <span class="rp new">3</span>
             <span class="la">10 days ago · Coua Phang <span class="jump">↪</span></span>
           </div>
 
           <div class="trow">
             <span class="au"><span class="st"></span><span class="nm">Leejoo Hwang</span></span>
-            <span class="su"><span class="txt">Anyone put PostHog data straight into their fundraising deck?</span><span class="sig">— building @tinymetrics</span></span>
+            <span class="su"><span class="txt">Anyone put PostHog data straight into their fundraising deck?</span></span>
             <span class="rp new">23</span>
             <span class="la">2 years ago · Ian Vanagas <span class="jump">↪</span></span>
           </div>
@@ -338,7 +333,7 @@
 
           <div class="trow">
             <span class="au"><span class="st"></span><span class="nm">Nadia Okoye</span></span>
-            <span class="su"><span class="txt">Self-hosting on a Raspberry Pi: how low can the footprint go?</span><span class="sig">— posting from a pi, send help (nicely)</span></span>
+            <span class="su"><span class="txt">Self-hosting on a Raspberry Pi: how low can the footprint go?</span></span>
             <span class="rp">9</span>
             <span class="la">6 hours ago · Nadia Okoye <span class="jump">↪</span></span>
           </div>
@@ -359,13 +354,13 @@
       <div class="wbody">
         <div class="hogs">
           <div class="hog"><span class="rk">1</span><span class="av" style="background:#F54E00">C</span>
-            <div><div class="who">Cory Watilo <span class="lvl" style="color:#F54E00;border-color:#F54E00;background:#F54E0022">🦔 Hogfather</span></div><div class="sig">“kindness &gt; growth”</div></div><span class="pts">1,910</span></div>
+            <div><div class="who">Cory Watilo <span class="lvl" style="color:#F54E00;border-color:#F54E00;background:#F54E0022">🦔 Hogfather</span></div></div><span class="pts">1,910 pts</span></div>
           <div class="hog"><span class="rk">2</span><span class="av" style="background:#B62AD9">P</span>
-            <div><div class="who">Paul D'Ambra</div><div class="sig">shipping in public, mostly on fire</div></div><span class="pts">240</span></div>
+            <div><div class="who">Paul D'Ambra <span class="lvl" style="color:#F54E00;border-color:#F54E00a0;background:#F54E001c">ElderHog</span></div></div><span class="pts">240 pts</span></div>
           <div class="hog"><span class="rk">3</span><span class="av" style="background:#2F80FA">R</span>
-            <div><div class="who">Raquel Smith</div><div class="sig">measure twice, autocapture once</div></div><span class="pts">142</span></div>
+            <div><div class="who">Raquel Smith <span class="lvl" style="color:#2F80FA;border-color:#2F80FA;background:#2F80FA1e">PowerHog</span></div></div><span class="pts">142 pts</span></div>
           <div class="hog"><span class="rk">4</span><span class="av" style="background:#30ABC6">L</span>
-            <div><div class="who">Leejoo Hwang</div><div class="sig">building @tinymetrics</div></div><span class="pts">62</span></div>
+            <div><div class="who">Leejoo Hwang <span class="lvl" style="color:#30ABC6;border-color:#30ABC6;background:#30ABC61c">Hogthusiast</span></div></div><span class="pts">62 pts</span></div>
         </div>
         <div class="ladder">
           <h6>⬆ Climb the ranks</h6>
