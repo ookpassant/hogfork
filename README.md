@@ -8,14 +8,14 @@ I kept this separate from my other work on purpose. It holds the design concept,
 
 ## The idea
 
-Right now the forum is framed like a helpdesk. You "Ask a question," threads carry statuses like needs-response, and product topics lead. That works for triage. But the communities that really stick feel like a place you belong to, and that's the part I want to bring forward. Two small moves do most of the work, and neither one needs a backend change.
+Right now the forum is framed like a helpdesk. You "Ask a question," threads carry statuses like needs-response, and product topics lead. That works for triage. But the communities that really stick feel like a place you belong to, and that's the part I want to bring forward. Two small moves do most of the work, and the core of each is frontend only.
 
 ### Bet 1: grow the conversation
 
 Soften the voice from triage to talk, and make it clear this is a community, not a support queue.
 
 - "Ask a question" becomes "Start a discussion." The window title "Questions" becomes "Community discussions."
-- Community boards come first: #introductions, #build-in-public, #war-stories, #where-in-the-world, #the-pub. Product topics sit just below, under "Product talk."
+- Community boards come first. The ones that already exist (#introductions, #where-in-the-world, #devrel) can lead as-is, pure reorder. A few more (#build-in-public, #war-stories, #the-pub) would give people more reasons to hang around, though those are new topics to set up, so they're a suggestion rather than a PR. Product topics sit just below, under "Product talk."
 - Support gets its own clear door. A gentle line saying that chatting through a bug is welcome, but if you just need it fixed, support lives over there. So the two intents stop competing for the same frame.
 
 ### Bet 2: spotlight the people
@@ -33,12 +33,24 @@ I leaned on what made the early-2000s boards feel like a place, rebuilt in PostH
 
 [`prototype/community-redesign.html`](prototype/community-redesign.html) is a self-contained concept. Open it in a browser. There's a "highlight what changed" toggle so you can see exactly what's touched against the live page. Everything in it (names, posts, points) is made-up sample data.
 
+## How this ships
+
+PostHog's default is to ship, so the plan leads with a shipped PR, not a
+permission slip. The smallest change (the copy rename) reverts in one line, so
+it goes out as a real PR on day one. The Discussion and the tracking issue carry
+the bigger direction next to it.
+
+- [`docs/PLAN.md`](docs/PLAN.md): each change mapped to real posthog.com files,
+  split into small atomic PRs, with an honest line between "ships now, frontend
+  only" and "needs a maintainer call" (the new boards, flags, instrumentation).
+- [`docs/discussion-draft.md`](docs/discussion-draft.md): the Ideas post.
+- [`docs/ISSUE.md`](docs/ISSUE.md): the tracking issue, one checkbox per PR.
+
 ## Status
 
 - [x] Explore the real forum and its Squeak components
 - [x] Concept prototype on the real PostHog OS layout
-- [ ] Lock the scope (see [`docs/PLAN.md`](docs/PLAN.md))
-- [ ] Fork posthog.com, build the diff, keep `npm run build` green
-- [ ] Open the PR
-
-See [`docs/PLAN.md`](docs/PLAN.md) for how each change maps to the real posthog.com code, and the order I'd ship them in.
+- [x] Structure the contribution (Discussion, issue, PR split)
+- [ ] Verify the cited threads (#7960, #7961) on posthog.com before posting
+- [ ] Fork posthog.com, open PR 1 (copy), link the prototype
+- [ ] Post the Discussion and open the tracking issue
