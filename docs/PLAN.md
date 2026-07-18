@@ -19,7 +19,25 @@ goes out as a real PR on day one. The talking happens next to it, not before it.
 3. **Tracking issue for the rest.** Open the issue in [`ISSUE.md`](ISSUE.md) so
    the agreed scope lives in one place. Each PR below closes one checkbox.
 4. **Ship the rest as small PRs from a fork.** Atomic, independently
-   reviewable, `npm run build` stays green. Merge what lands, drop what doesn't.
+   reviewable, `pnpm build:minimal` stays green. Merge what lands, drop what
+   doesn't.
+
+## Local dev and verification
+
+From the handbook (developing-the-website):
+
+- **pnpm 10.x, Node 22.x.**
+- Dev server: `pnpm install && pnpm start`. The first run is slow ("Building
+  development bundle" takes a few minutes).
+- Quick build check: `pnpm build:minimal`.
+- **Runs without secrets.** Missing env vars (GitHub contributors, Ashby, and
+  so on) throw errors that are "dismissible, and you can continue to edit the
+  website." So a copy or nav change can be verified locally without their
+  backend. What we cannot verify locally is the forum rendering with real data,
+  since that comes from Strapi. For the look, the prototype stands in.
+- Verification bar per PR: `pnpm start` renders the changed component, and
+  `pnpm build:minimal` compiles clean. Ask in #posthogdotcom only if a change
+  actually needs a real env var.
 
 ## Where things live
 
