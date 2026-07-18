@@ -19,9 +19,11 @@ Hi 👋 — I'm an active PostHog user and I spend a fair bit of time in the for
 
 2. **Spotlight the people.** Here's the fun part: PostHog *already ships* a contributor level ladder — `Hoglet → Hogthusiast → PowerHog → TopHog → ElderHog → Hogfather` (`src/components/Squeak/util/getLevel.ts`). It renders inside a thread as e.g. `PowerHog · 142`, but you'd never notice it. A small **"Top hogs"** spotlight would surface that ladder so contributors actually get *seen* — using data that already exists.
 
-**The part I want to be upfront about:** `/questions` is also a real support channel, and I'm not proposing to break that. If anything, the concept makes support's door *clearer* — a "chatting through a bug is welcome here, but if you just need it fixed, support's over there →" pointer — so the community and support intents stop competing for the same frame.
+**I did some reading first.** From existing threads (#7961 on surfacing solved support Qs into the forum, #7960 on a points incentive) it's clear the forum was created to *surface solved answers publicly*, and that a reputation/points idea has already been on your minds. This proposal builds on that, not against it — the level ladder in bet 2 is exactly the kind of incentive #7960 gestured at, just made visible.
 
-**See it:** [prototype link] — a clickable concept built on PostHog's *real* design (the PostHog OS window, your palette, the actual level colours). There's a "highlight what changed" toggle so you can see exactly what's touched vs. the live page. It leans into a bit of old-forum nostalgia (category bars, "last post ↪", a "who's browsing" footer), kept in the current skin.
+**The part I want to be upfront about:** `/questions` is also a real support channel, and I'm not proposing to break that — surfacing solved answers stays the point. If anything, the concept makes support's door *clearer* — a "chatting through a bug is welcome here, but if you just need it fixed, support's over there →" pointer — so the community and support intents stop competing for the same frame.
+
+**See it:** [prototype link] — a clickable concept built on PostHog's *real* design (the PostHog OS window, your palette, the actual level colours). There's a "highlight what changed" toggle so you can see exactly what's touched vs. the live page. It leans into a bit of old-forum nostalgia (category bars, "last post ↪", a "who's browsing" footer), kept in the current skin. *(All names, posts, and points in it are fictional sample data.)*
 
 **If there's appetite, I'd start tiny:** a copy + nav PR (the rename + community-first ordering + the support pointer). Pure frontend, easy to review. The bolder pieces (board grouping, the Top Hogs spotlight) could follow as separate PRs, only if you want them.
 
