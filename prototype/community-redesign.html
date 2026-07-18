@@ -71,7 +71,7 @@
   .titlebar .t{font-size:12.5px;font-weight:700;color:var(--text-2);margin-left:4px;}
   .titlebar .ctrls{margin-left:auto;display:flex;gap:14px;color:var(--muted-2);font-size:13px;}
 
-  .winbody{display:grid;grid-template-columns:220px 1fr;height:498px;}
+  .winbody{display:grid;grid-template-columns:220px 1fr;height:642px;}
   @media(max-width:640px){.winbody{grid-template-columns:1fr;height:auto;}}
 
   /* in-window sidebar */
@@ -136,6 +136,46 @@
   .ladder .you b{color:var(--red);}
   :root[data-theme="dark"] .ladder .you b{color:var(--yellow);}
 
+  /* community banner — makes it obvious this isn't a support queue */
+  .banner{display:flex;align-items:center;gap:12px;padding:10px 18px;background:linear-gradient(90deg,rgba(235,157,42,.18),rgba(235,157,42,.04));border-bottom:1px solid var(--line);}
+  .banner .txt{font-size:13px;color:var(--text-2);line-height:1.4;}
+  .banner .txt b{color:var(--text);}
+  .banner .to{margin-left:auto;flex-shrink:0;}
+  .banner .to .face{background:var(--win);color:var(--text);border-color:var(--line-2);white-space:nowrap;}
+  @media(max-width:640px){.banner{flex-wrap:wrap;} .banner .to{margin-left:0;}}
+
+  /* ProBoards-style category bar, in PostHog skin */
+  .catbar{display:flex;align-items:center;gap:10px;padding:8px 18px;background:linear-gradient(180deg,#F3A73A,#EB9D2A);color:#3a2600;border-bottom:1px solid rgba(0,0,0,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.35);}
+  .catbar.prod{background:linear-gradient(180deg,#e9eae2,#dedfd6);color:#3d4034;}
+  :root[data-theme="dark"] .catbar{background:linear-gradient(180deg,#7c5514,#5e4110);color:#ffe6bf;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);}
+  :root[data-theme="dark"] .catbar.prod{background:linear-gradient(180deg,#34363d,#2b2d33);color:#c7c9bf;}
+  .catbar .ci{font-size:15px;}
+  .catbar .cn{font-weight:800;font-size:13px;}
+  .catbar .cd{font-size:12px;opacity:.82;}
+  .catbar .cto{margin-left:auto;font-size:11.5px;font-weight:700;white-space:nowrap;}
+  .catbar .cto a{text-decoration:underline;text-underline-offset:2px;}
+  @media(max-width:640px){.catbar .cd{display:none;}}
+
+  /* last-post jump arrow (ProBoards nostalgia) — pinned right so it never clips */
+  .trow .la{position:relative;padding-right:18px;}
+  .trow .la .jump{position:absolute;right:0;top:0;color:var(--red);font-weight:700;}
+  :root[data-theme="dark"] .trow .la .jump{color:var(--yellow);}
+
+  /* signature: little divider rule above, like an old forum sig */
+  .trow .su .sig{border-top:1px solid var(--line);padding-top:3px;display:inline-block;max-width:100%;}
+
+  /* sidebar support pointer */
+  .support-note{margin:16px 2px 4px;border:1px dashed var(--line-2);border-radius:8px;padding:9px 10px;background:var(--win-2);}
+  .support-note b{display:block;font-size:12px;color:var(--text);margin-bottom:2px;}
+  .support-note p{margin:0 0 6px;font-size:11.5px;color:var(--text-3);line-height:1.4;}
+  .support-note a{font-size:12px;font-weight:700;color:var(--red);}
+  :root[data-theme="dark"] .support-note a{color:var(--yellow);}
+
+  /* who's browsing footer */
+  .online{display:flex;align-items:center;gap:8px;padding:8px 18px;border-top:1px solid var(--line);background:var(--win-2);font-size:11.5px;color:var(--text-3);}
+  .online .g{width:8px;height:8px;border-radius:50%;background:#5E9440;flex-shrink:0;}
+  .online b{color:var(--text-2);}
+
   /* changed highlight */
   .review{position:fixed;bottom:14px;left:14px;z-index:50;display:flex;gap:8px;align-items:center;}
   .review .flag{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;background:#1b2a16;color:#eaf3e2;padding:5px 10px;border-radius:20px;border:1px solid var(--orange);}
@@ -179,19 +219,25 @@
         <span class="t changed" data-note='was: “Questions”'>🦔 Community discussions</span>
         <span class="ctrls"><span>▢</span><span>✕</span></span>
       </div>
+      <div class="banner changed" data-note="Bet 1: makes it obvious — community, not a support queue">
+        <span class="txt"><b>👋 You're in the community.</b> Introduce yourself, show what you built, swap war stories. This isn't a support queue — hit a wall on your own project?</span>
+        <span class="to"><button class="btn sm"><span class="face">🧑‍💻 Talk to a human</span></button></span>
+      </div>
       <div class="winbody">
         <!-- in-window sidebar -->
         <div class="qside">
           <button class="btn primary block changed" data-note='Bet 1: was “Ask a question”'><span class="face">Start a discussion <span class="k">N</span></span></button>
-          <div class="grp changed" data-note="Bet 1: community-first — off-topic lifted to the top">
+          <div class="grp changed" data-note="Bet 1: community-first boards, up top">
             <h5>The community</h5>
             <a class="on"><span class="gi">👋</span> #introductions</a>
+            <a><span class="gi">🛠️</span> #show-and-tell</a>
+            <a><span class="gi">🔥</span> #war-stories</a>
+            <a><span class="gi">🚀</span> #build-in-public</a>
             <a><span class="gi">🌍</span> #where-in-the-world</a>
-            <a><span class="gi">📣</span> #devrel</a>
             <a><span class="gi">🍺</span> #the-pub</a>
           </div>
           <div class="grp">
-            <h5>Products</h5>
+            <h5>Product talk</h5>
             <a><span class="gi">📊</span> Product analytics</a>
             <a><span class="gi">🌐</span> Web analytics</a>
             <a><span class="gi">🎬</span> Session replay</a>
@@ -209,89 +255,97 @@
             <h5>Product OS</h5>
             <a><span class="gi">▦</span> Dashboards</a>
             <a><span class="gi">🐷</span> HogQL</a>
-            <a><span class="gi">🛠️</span> Toolbar</a>
+            <a><span class="gi">🧰</span> Toolbar</a>
             <a><span class="gi">🔌</span> API</a>
+          </div>
+          <div class="support-note changed" data-note="Bet 1: support clearly lives elsewhere">
+            <b>🆘 Bug blocking you?</b>
+            <p>This is a community, not a ticket queue.</p>
+            <a href="#">Talk to a human →</a>
           </div>
         </div>
 
         <!-- table -->
         <div class="qtable">
           <div class="thead">
-            <span class="au">Author</span><span class="su">Subject</span><span class="rp">Replies</span><span class="la">Last activity</span>
+            <span class="au">Author</span><span class="su">Subject</span><span class="rp">Replies</span><span class="la">Last post</span>
+          </div>
+
+          <div class="catbar changed" data-note="ProBoards-style boards — community category leads">
+            <span class="ci">📣</span><span class="cn">The community</span><span class="cd">— say hi, show your work, tell a war story</span>
           </div>
 
           <div class="trow">
-            <span class="au"><span class="st" title="Pinned"><svg viewBox="0 0 24 24" fill="none" stroke="#EB9D2A" stroke-width="2" stroke-linecap="round"><path d="M9 4h6l-1 7 4 3v2H6v-2l4-3z"/><path d="M12 16v4"/></svg></span><span class="nm">Cory Watilo</span>
-              <span class="lvl changed" data-note="Bet 2: level added to list" style="color:#F54E00;border-color:#F54E00;background:#F54E0022">🦔 Hogfather</span></span>
+            <span class="au"><span class="st" title="Pinned"><svg viewBox="0 0 24 24" fill="none" stroke="#EB9D2A" stroke-width="2" stroke-linecap="round"><path d="M9 4h6l-1 7 4 3v2H6v-2l4-3z"/><path d="M12 16v4"/></svg></span><span class="nm">Cory Watilo</span></span>
             <span class="su"><span class="txt">[Welcome] How this community works — start here, be kind</span></span>
             <span class="rp">0</span>
-            <span class="la">2 years ago · Cory Watilo</span>
+            <span class="la">2 years ago · Cory Watilo <span class="jump">↪</span></span>
           </div>
 
           <div class="trow">
-            <span class="au"><span class="st" title="Pinned"><svg viewBox="0 0 24 24" fill="none" stroke="#EB9D2A" stroke-width="2" stroke-linecap="round"><path d="M9 4h6l-1 7 4 3v2H6v-2l4-3z"/><path d="M12 16v4"/></svg></span><span class="nm">Bijan Boustani</span>
-              <span class="lvl" style="color:#F54E00;border-color:#F54E00a0;background:#F54E001c">ElderHog</span></span>
+            <span class="au"><span class="st" title="Pinned"><svg viewBox="0 0 24 24" fill="none" stroke="#EB9D2A" stroke-width="2" stroke-linecap="round"><path d="M9 4h6l-1 7 4 3v2H6v-2l4-3z"/><path d="M12 16v4"/></svg></span><span class="nm">Bijan Boustani</span></span>
             <span class="su"><span class="txt">Billboards are live in SF! (989) POST-HOG</span></span>
             <span class="rp new">1</span>
-            <span class="la">a year ago · Bijan Boustani</span>
+            <span class="la">a year ago · Bijan Boustani <span class="jump">↪</span></span>
           </div>
 
           <div class="trow">
-            <span class="au"><span class="st" title="Solved"><svg viewBox="0 0 24 24" fill="none" stroke="#5E9440" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.3 12.4l2.6 2.6 4.7-5.2"/></svg></span><span class="nm">Raquel Smith</span>
-              <span class="lvl" style="color:#2F80FA;border-color:#2F80FA;background:#2F80FA1e">PowerHog</span></span>
-            <span class="su"><span class="txt">Pre-offsite hangs in Athens</span><span class="sig changed" data-note="Bet 2: signatures">— “kindness &gt; growth”</span></span>
+            <span class="au"><span class="st"></span><span class="nm">Raquel Smith</span></span>
+            <span class="su"><span class="txt">Pre-offsite hangs in Athens 🇬🇷</span><span class="sig changed" data-note="Bet 2: signatures, the old-forum way">— “kindness &gt; growth”</span></span>
             <span class="rp new">3</span>
-            <span class="la">10 days ago · Coua Phang</span>
+            <span class="la">10 days ago · Coua Phang <span class="jump">↪</span></span>
           </div>
 
           <div class="trow">
-            <span class="au"><span class="st"></span><span class="nm">Paul D'Ambra</span>
-              <span class="lvl" style="color:#B62AD9;border-color:#B62AD9;background:#B62AD91e">TopHog</span></span>
-            <span class="su"><span class="txt">How are you all structuring events for a B2B product?</span></span>
-            <span class="rp new">11</span>
-            <span class="la">a year ago · Webmaster Maggew</span>
-          </div>
-
-          <div class="trow">
-            <span class="au"><span class="st"></span><span class="nm">Leejoo Hwang</span>
-              <span class="lvl" style="color:#30ABC6;border-color:#30ABC6;background:#30ABC61c">Hogthusiast</span></span>
-            <span class="su"><span class="txt">Anyone put PostHog data straight into their fundraising deck?</span> <span class="sig">— building @tinymetrics</span></span>
+            <span class="au"><span class="st"></span><span class="nm">Leejoo Hwang</span></span>
+            <span class="su"><span class="txt">Anyone put PostHog data straight into their fundraising deck?</span><span class="sig">— building @tinymetrics</span></span>
             <span class="rp new">23</span>
-            <span class="la">2 years ago · Ian Vanagas</span>
+            <span class="la">2 years ago · Ian Vanagas <span class="jump">↪</span></span>
           </div>
 
           <div class="trow">
-            <span class="au"><span class="st" title="Solved"><svg viewBox="0 0 24 24" fill="none" stroke="#5E9440" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.3 12.4l2.6 2.6 4.7-5.2"/></svg></span><span class="nm">Ada Kreyszig</span>
-              <span class="lvl" style="color:#B62AD9;border-color:#B62AD9;background:#B62AD91e">TopHog</span></span>
-            <span class="su"><span class="txt">Autocapture not firing inside a shadow DOM — fixed it, here's how</span></span>
-            <span class="rp">7</span>
-            <span class="la">3 months ago · Ada K.</span>
-          </div>
-
-          <div class="trow">
-            <span class="au"><span class="st"></span><span class="nm">Nadia Okoye</span>
-              <span class="lvl" style="color:#6B7280;border-color:#6B7280;background:#6B728018">Hoglet</span></span>
-            <span class="su"><span class="txt">Self-hosting on a Raspberry Pi: how low can the footprint go?</span><span class="sig">— posting from a pi, send help (nicely)</span></span>
-            <span class="rp">9</span>
-            <span class="la">6 hours ago · Nadia Okoye</span>
-          </div>
-
-          <div class="trow">
-            <span class="au"><span class="st"></span><span class="nm">Marco Silva</span>
-              <span class="lvl" style="color:#30ABC6;border-color:#30ABC6;background:#30ABC61c">Hogthusiast</span></span>
-            <span class="su"><span class="txt">What's your funnel-vs-cohort rule of thumb for activation?</span></span>
-            <span class="rp new">14</span>
-            <span class="la">yesterday · Marco Silva</span>
-          </div>
-
-          <div class="trow">
-            <span class="au"><span class="st"></span><span class="nm">Priya Natarajan</span>
-              <span class="lvl" style="color:#2F80FA;border-color:#2F80FA;background:#2F80FA1e">PowerHog</span></span>
+            <span class="au"><span class="st"></span><span class="nm">Priya Natarajan</span></span>
             <span class="su"><span class="txt">Show &amp; tell: a Grafana-style status board built on HogQL 📊</span></span>
             <span class="rp">6</span>
-            <span class="la">4 days ago · Priya Natarajan</span>
+            <span class="la">4 days ago · Priya Natarajan <span class="jump">↪</span></span>
+          </div>
+
+          <div class="catbar prod">
+            <span class="ci">🛠️</span><span class="cn">Product talk</span><span class="cd">— how-tos &amp; deep dives</span>
+            <span class="cto changed" data-note="Bet 1: support has its own door">need it fixed fast? <a href="#">talk to a human →</a></span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st"></span><span class="nm">Paul D'Ambra</span></span>
+            <span class="su"><span class="txt">How are you all structuring events for a B2B product?</span></span>
+            <span class="rp new">11</span>
+            <span class="la">a year ago · Webmaster Maggew <span class="jump">↪</span></span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st" title="Solved"><svg viewBox="0 0 24 24" fill="none" stroke="#5E9440" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.3 12.4l2.6 2.6 4.7-5.2"/></svg></span><span class="nm">Ada Kreyszig</span></span>
+            <span class="su"><span class="txt">Autocapture not firing inside a shadow DOM — fixed it, here's how</span></span>
+            <span class="rp">7</span>
+            <span class="la">3 months ago · Ada K. <span class="jump">↪</span></span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st"></span><span class="nm">Marco Silva</span></span>
+            <span class="su"><span class="txt">What's your funnel-vs-cohort rule of thumb for activation?</span></span>
+            <span class="rp new">14</span>
+            <span class="la">yesterday · Marco Silva <span class="jump">↪</span></span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st"></span><span class="nm">Nadia Okoye</span></span>
+            <span class="su"><span class="txt">Self-hosting on a Raspberry Pi: how low can the footprint go?</span><span class="sig">— posting from a pi, send help (nicely)</span></span>
+            <span class="rp">9</span>
+            <span class="la">6 hours ago · Nadia Okoye <span class="jump">↪</span></span>
           </div>
         </div>
+      </div>
+      <div class="online">
+        <span class="g"></span><span>Browsing this board: <b>128 hogs</b> — 6 members &amp; 122 guests · most ever online: <b>4,210</b> 🦔</span>
       </div>
     </div>
 

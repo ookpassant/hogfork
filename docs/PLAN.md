@@ -14,20 +14,23 @@ Mapping each proposed change to the real `posthog.com` code, so the diff stays s
 
 ## Proposed PR slices
 
-Small first, so it merges; the rest as fast follow-ups.
+Small first, so it merges; the rest as fast follow-ups. (Rank badges are deliberately **not** added to the topic list — see Bet 2 in the README.)
 
-### PR 1 — surface the level badge in the question list *(smallest, safest, fully real)*
-- Render `<LevelBadge points={...} />` beside the author in `QuestionsTable`'s `Row`. The component and points already exist; this only *shows* them where they're currently hidden.
-- Ship the copy change with it: `"Ask a question" → "Start a discussion"`.
-- No backend/Strapi change. No new data. Pure frontend.
-- Keep `npm run build` green (lint + types run in build).
+### PR 1 — voice + framing *(smallest, safest, pure copy/nav)*
+- `"Ask a question" → "Start a discussion"`; `"Questions" → "Community discussions"`.
+- Reorder `communityMenu` so community boards lead and product topics group under "Product talk".
+- Add the "this is a community, not a support queue → talk to a human" pointer.
+- No backend, no new data, no schema. Copy + nav order only. Keep `npm run build` green.
 
-### PR 2 — community-first sidebar
-- Reorder `communityMenu` so off-topic/community boards lead.
-- Copy pass on section labels toward community voice.
+### PR 2 — ProBoards-style board grouping
+- Group the question list under category bars (community vs product) instead of one flat list, in PostHog's skin.
+- Presentational; reads from the topics that already exist.
 
 ### PR 3 — contributor spotlight ("Top hogs")
-- A small module surfacing top contributors by points for a window (uses existing profile/points data).
+- A small module surfacing top contributors by their existing points/levels (`getLevel.ts`). Uses data that's already there — no new fields.
+
+### Later — signatures
+- A per-profile `signature` line under posts. Needs a **profile field on the Strapi backend**, so it's a bigger, separate change — worth doing, not the opening move.
 
 ## PostHog-native touches (worth doing, signals fit)
 - **Gate behind a PostHog feature flag** so it can be rolled out / killed remotely.
