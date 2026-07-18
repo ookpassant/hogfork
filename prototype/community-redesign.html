@@ -1,0 +1,345 @@
+<title>PostHog Community — redesign concept</title>
+<style>
+  :root{
+    --red:#F54E00; --orange:#EB9D2A; --orange-shadow:#B17816; --yellow:#FFBA53;
+    --blue:#2F80FA; --seagreen:#30ABC6; --fuchsia:#B62AD9; --green:#5E9440;
+    --ink:#23251D; --muted:#73756B; --muted-2:#9EA096;
+    --win:#ffffff; --win-2:#F6F6F1; --line:#E1E2DC; --line-2:#D2D3CC;
+    --text:#23251D; --text-2:#4D4F46; --text-3:#73756B;
+    --wall-a:#cfe3c0; --wall-b:#a9cf9a; --wall-c:#e9f0dd;
+    --sans:"Matter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --win:#232429; --win-2:#2a2b31; --line:#34363d; --line-2:#3f414a;
+    --text:#EEEFE9; --text-2:#c7c9bf; --text-3:#8b8d83;
+    --wall-a:#26332a; --wall-b:#1c2620; --wall-c:#2b3a2f;
+  }}
+  :root[data-theme="light"]{--win:#fff;--win-2:#F6F6F1;--line:#E1E2DC;--line-2:#D2D3CC;--text:#23251D;--text-2:#4D4F46;--text-3:#73756B;--wall-a:#cfe3c0;--wall-b:#a9cf9a;--wall-c:#e9f0dd;}
+  :root[data-theme="dark"]{--win:#232429;--win-2:#2a2b31;--line:#34363d;--line-2:#3f414a;--text:#EEEFE9;--text-2:#c7c9bf;--text-3:#8b8d83;--wall-a:#26332a;--wall-b:#1c2620;--wall-c:#2b3a2f;}
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    font-family:var(--sans);color:var(--text);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;
+    min-height:100vh;padding-bottom:110px;
+    background:
+      radial-gradient(120% 80% at 85% 90%, rgba(120,170,110,.5), transparent 55%),
+      radial-gradient(90% 70% at 10% 10%, var(--wall-c), transparent 60%),
+      linear-gradient(160deg, var(--wall-a), var(--wall-b));
+    background-attachment:fixed;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* top nav */
+  header.top{background:var(--win);border-bottom:1px solid var(--line);height:52px;display:flex;align-items:center;gap:20px;padding:0 16px;position:sticky;top:0;z-index:30;}
+  header.top .logo{font-size:22px;}
+  header.top nav{display:flex;gap:2px;}
+  header.top nav a{font-size:14px;font-weight:600;color:var(--text-2);padding:6px 9px;border-radius:6px;}
+  header.top nav a:hover{background:var(--win-2);color:var(--text);}
+  header.top .right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+  header.top .ico{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--text-3);}
+  header.top .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(#EB9D2A,#F54E00);}
+  .themetoggle{background:none;border:1px solid var(--line-2);color:var(--text-2);font-size:12px;padding:5px 8px;border-radius:6px;cursor:pointer;}
+
+  /* pressable button */
+  .btn{position:relative;display:inline-flex;font-weight:700;font-size:14px;cursor:pointer;border:none;background:none;font-family:var(--sans);border-radius:8px;}
+  .btn.primary{background:var(--orange-shadow);}
+  .btn .face{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:8px;border:1.5px solid var(--orange-shadow);padding:7px 15px;transform:translateY(-3px);transition:transform .1s;width:100%;}
+  .btn.primary .face{background:var(--orange);color:#000;}
+  .btn:hover .face{transform:translateY(-4px);}
+  .btn:active .face{transform:translateY(-1px);}
+  .btn.block{display:block;width:100%;}
+  .btn.sm .face{padding:4px 11px;font-size:13px;transform:translateY(-2px);}
+  .btn:focus-visible{outline:3px solid var(--seagreen);outline-offset:2px;}
+  .btn .k{font-size:10px;font-weight:700;opacity:.7;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:0 4px;}
+
+  /* desktop */
+  .desktop{display:grid;grid-template-columns:92px 1fr 92px;gap:16px;padding:20px 16px 40px;align-items:start;}
+  @media(max-width:1080px){.desktop{grid-template-columns:1fr;} .dock{display:none;}}
+  .dock{display:flex;flex-direction:column;gap:16px;align-items:center;position:sticky;top:70px;}
+  .dock .app{display:flex;flex-direction:column;align-items:center;gap:4px;width:82px;text-align:center;}
+  .dock .app .tile{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;box-shadow:0 2px 5px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.5);}
+  .dock .app span{font-size:10.5px;font-weight:600;color:#20301c;line-height:1.15;text-shadow:0 1px 1px rgba(255,255,255,.5);}
+  :root[data-theme="dark"] .dock .app span{color:#d7e3cf;text-shadow:0 1px 2px rgba(0,0,0,.5);}
+  @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .dock .app span{color:#d7e3cf;text-shadow:0 1px 2px rgba(0,0,0,.5);}}
+
+  /* window */
+  .window{background:var(--win);border:1px solid var(--line-2);border-radius:12px;box-shadow:0 12px 40px rgba(20,30,15,.28);overflow:hidden;}
+  .titlebar{display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;background:var(--win-2);border-bottom:1px solid var(--line);}
+  .titlebar .dots{display:flex;gap:6px;}
+  .titlebar .dots i{width:11px;height:11px;border-radius:50%;display:block;}
+  .titlebar .t{font-size:12.5px;font-weight:700;color:var(--text-2);margin-left:4px;}
+  .titlebar .ctrls{margin-left:auto;display:flex;gap:14px;color:var(--muted-2);font-size:13px;}
+
+  .winbody{display:grid;grid-template-columns:220px 1fr;height:498px;}
+  @media(max-width:640px){.winbody{grid-template-columns:1fr;height:auto;}}
+
+  /* in-window sidebar */
+  .qside{border-right:1px solid var(--line);padding:14px 12px;overflow-y:auto;}
+  .qside .grp{margin:18px 2px 0;}
+  .qside .grp:first-of-type{margin-top:18px;}
+  .qside .grp h5{margin:0 0 4px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);}
+  .qside .grp a{display:flex;align-items:center;gap:7px;padding:4px 7px;border-radius:6px;font-size:13px;color:var(--text-2);font-weight:500;}
+  .qside .grp a:hover{background:var(--win-2);color:var(--red);}
+  .qside .grp a .gi{width:15px;text-align:center;opacity:.7;font-size:12px;}
+  .qside .grp a.on{background:rgba(245,78,0,.08);color:var(--red);}
+
+  /* table */
+  .qtable{min-width:0;overflow-y:auto;}
+  .thead,.trow{display:grid;grid-template-columns:236px 1fr 70px 176px;align-items:center;column-gap:20px;}
+  @media(max-width:900px){.thead,.trow{grid-template-columns:190px 1fr 56px;column-gap:16px;} .trow .la,.thead .la{display:none;}}
+  @media(max-width:640px){.thead,.trow{grid-template-columns:1fr 50px;} .trow .au,.thead .au{display:none;}}
+  .thead{padding:12px 18px;border-bottom:1px solid var(--line);font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--text-3);position:sticky;top:0;background:var(--win);z-index:2;}
+  .trow{padding:12px 18px;border-bottom:1px solid var(--line);cursor:pointer;}
+  .trow:hover{background:var(--win-2);}
+  .trow .au{display:flex;align-items:center;gap:8px;min-width:0;}
+  .trow .au .st{width:15px;flex-shrink:0;display:grid;place-items:center;}
+  .trow .au .st svg{width:15px;height:15px;}
+  .trow .au .nm{font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:1;min-width:0;}
+  .trow .su{min-width:0;}
+  .trow .su .txt{font-size:13.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+  .trow:hover .su .txt{color:var(--red);}
+  :root[data-theme="dark"] .trow:hover .su .txt{color:var(--yellow);}
+  .trow .su .sig{font-size:11.5px;color:var(--text-3);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-top:3px;}
+  .trow .rp{font-size:13px;color:var(--text-2);text-align:center;font-variant-numeric:tabular-nums;}
+  .trow .rp.new{color:var(--red);font-weight:700;}
+  :root[data-theme="dark"] .trow .rp.new{color:var(--yellow);}
+  .thead .rp{text-align:center;}
+  .trow .la{font-size:12.5px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  /* level pill — matches the real "PowerHog · 142" thread badge */
+  .lvl{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:0 6px;line-height:17px;border-radius:5px;border:1px solid;white-space:nowrap;flex-shrink:0;}
+
+  /* Top Hogs desktop widget */
+  .widget{margin-top:18px;background:var(--win);border:1px solid var(--line-2);border-radius:12px;box-shadow:0 10px 30px rgba(20,30,15,.22);overflow:hidden;max-width:940px;}
+  .widget .titlebar .t{color:var(--red);}
+  :root[data-theme="dark"] .widget .titlebar .t{color:var(--yellow);}
+  .whead{display:flex;gap:8px;}
+  .wbody{display:grid;grid-template-columns:1fr 300px;}
+  @media(max-width:760px){.wbody{grid-template-columns:1fr;}}
+  .hogs{padding:8px 6px;}
+  .hog{display:grid;grid-template-columns:20px 28px 1fr auto;gap:10px;align-items:center;padding:7px 10px;border-radius:8px;}
+  .hog:hover{background:var(--win-2);}
+  .hog .rk{font-size:12px;color:var(--muted-2);font-variant-numeric:tabular-nums;}
+  .hog .av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:12px;}
+  .hog .who{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:6px;}
+  .hog .sig{font-size:11.5px;color:var(--text-3);font-style:italic;margin-top:1px;}
+  .hog .pts{font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums;}
+  .ladder{border-left:1px solid var(--line);padding:14px 16px;}
+  .ladder h6{margin:0 0 9px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);}
+  .ladder .r{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;}
+  .ladder .r .th{margin-left:auto;font-size:11px;color:var(--muted-2);font-variant-numeric:tabular-nums;}
+  .ladder .r.me{background:rgba(235,157,42,.12);margin:2px -8px;padding:4px 8px;border-radius:6px;}
+  .ladder .prog{height:6px;border-radius:4px;background:var(--win-2);border:1px solid var(--line);overflow:hidden;margin:10px 0 5px;}
+  .ladder .prog i{display:block;height:100%;width:64%;background:linear-gradient(90deg,var(--orange),var(--red));}
+  .ladder .you{font-size:11.5px;color:var(--text-3);}
+  .ladder .you b{color:var(--red);}
+  :root[data-theme="dark"] .ladder .you b{color:var(--yellow);}
+
+  /* changed highlight */
+  .review{position:fixed;bottom:14px;left:14px;z-index:50;display:flex;gap:8px;align-items:center;}
+  .review .flag{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;background:#1b2a16;color:#eaf3e2;padding:5px 10px;border-radius:20px;border:1px solid var(--orange);}
+  .review label{font-size:11.5px;color:var(--text-2);display:flex;align-items:center;gap:5px;cursor:pointer;background:var(--win);border:1px solid var(--line-2);padding:5px 9px;border-radius:20px;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+  body.showdiff .changed{outline:1.5px dashed var(--red);outline-offset:3px;border-radius:4px;position:relative;}
+  body.showdiff .changed::after{content:attr(data-note);position:absolute;top:-8px;left:0;transform:translateY(-100%);background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap;z-index:9;font-style:normal;letter-spacing:0;}
+  @media(max-width:900px){body.showdiff .changed::after{display:none;}}
+</style>
+
+<header class="top">
+  <span class="logo">🦔</span>
+  <nav>
+    <a href="#">Products</a><a href="#">Pricing</a><a href="#">Docs</a>
+    <a href="#" style="color:var(--red)">Community</a><a href="#">Company</a><a href="#">More</a>
+  </nav>
+  <div class="right">
+    <button class="themetoggle" onclick="(function(){var r=document.documentElement;var d=(r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));r.setAttribute('data-theme',d==='dark'?'light':'dark');})()">◐ theme</button>
+    <button class="btn primary sm"><span class="face">Open PostHog</span></button>
+    <span class="ico">⌕</span>
+    <span class="av"></span>
+  </div>
+</header>
+
+<div class="desktop">
+  <!-- LEFT DOCK -->
+  <div class="dock">
+    <a class="app"><span class="tile" style="background:#F9E3C0">🏠</span><span>Home</span></a>
+    <a class="app"><span class="tile" style="background:#CDE8F2">🚗</span><span>Self-driving product</span></a>
+    <a class="app"><span class="tile" style="background:#E3D6F5">🏬</span><span>Context warehouse</span></a>
+    <a class="app"><span class="tile" style="background:#FBD9C9">💸</span><span>Pricing</span></a>
+    <a class="app"><span class="tile" style="background:#D8EFD2">📚</span><span>Docs</span></a>
+    <a class="app"><span class="tile" style="background:#FCE8B2">▶️</span><span>Demo</span></a>
+    <a class="app"><span class="tile" style="background:#F3C9C0">🧑‍💻</span><span>Talk to a human</span></a>
+  </div>
+
+  <!-- CENTER: forum window + widget -->
+  <div>
+    <div class="window">
+      <div class="titlebar">
+        <span class="dots"><i style="background:#F54E00"></i><i style="background:#EB9D2A"></i><i style="background:#5E9440"></i></span>
+        <span class="t changed" data-note='was: “Questions”'>🦔 Community discussions</span>
+        <span class="ctrls"><span>▢</span><span>✕</span></span>
+      </div>
+      <div class="winbody">
+        <!-- in-window sidebar -->
+        <div class="qside">
+          <button class="btn primary block changed" data-note='Bet 1: was “Ask a question”'><span class="face">Start a discussion <span class="k">N</span></span></button>
+          <div class="grp changed" data-note="Bet 1: community-first — off-topic lifted to the top">
+            <h5>The community</h5>
+            <a class="on"><span class="gi">👋</span> #introductions</a>
+            <a><span class="gi">🌍</span> #where-in-the-world</a>
+            <a><span class="gi">📣</span> #devrel</a>
+            <a><span class="gi">🍺</span> #the-pub</a>
+          </div>
+          <div class="grp">
+            <h5>Products</h5>
+            <a><span class="gi">📊</span> Product analytics</a>
+            <a><span class="gi">🌐</span> Web analytics</a>
+            <a><span class="gi">🎬</span> Session replay</a>
+            <a><span class="gi">🚩</span> Feature flags</a>
+            <a><span class="gi">🧪</span> Experiments</a>
+            <a><span class="gi">🗄️</span> Data warehouse</a>
+          </div>
+          <div class="grp">
+            <h5>Data</h5>
+            <a><span class="gi">{}</span> People &amp; properties</a>
+            <a><span class="gi">⚡</span> Events &amp; actions</a>
+            <a><span class="gi">👪</span> Groups</a>
+          </div>
+          <div class="grp">
+            <h5>Product OS</h5>
+            <a><span class="gi">▦</span> Dashboards</a>
+            <a><span class="gi">🐷</span> HogQL</a>
+            <a><span class="gi">🛠️</span> Toolbar</a>
+            <a><span class="gi">🔌</span> API</a>
+          </div>
+        </div>
+
+        <!-- table -->
+        <div class="qtable">
+          <div class="thead">
+            <span class="au">Author</span><span class="su">Subject</span><span class="rp">Replies</span><span class="la">Last activity</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st" title="Pinned"><svg viewBox="0 0 24 24" fill="none" stroke="#EB9D2A" stroke-width="2" stroke-linecap="round"><path d="M9 4h6l-1 7 4 3v2H6v-2l4-3z"/><path d="M12 16v4"/></svg></span><span class="nm">Cory Watilo</span>
+              <span class="lvl changed" data-note="Bet 2: level added to list" style="color:#F54E00;border-color:#F54E00;background:#F54E0022">🦔 Hogfather</span></span>
+            <span class="su"><span class="txt">[Welcome] How this community works — start here, be kind</span></span>
+            <span class="rp">0</span>
+            <span class="la">2 years ago · Cory Watilo</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st" title="Pinned"><svg viewBox="0 0 24 24" fill="none" stroke="#EB9D2A" stroke-width="2" stroke-linecap="round"><path d="M9 4h6l-1 7 4 3v2H6v-2l4-3z"/><path d="M12 16v4"/></svg></span><span class="nm">Bijan Boustani</span>
+              <span class="lvl" style="color:#F54E00;border-color:#F54E00a0;background:#F54E001c">ElderHog</span></span>
+            <span class="su"><span class="txt">Billboards are live in SF! (989) POST-HOG</span></span>
+            <span class="rp new">1</span>
+            <span class="la">a year ago · Bijan Boustani</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st" title="Solved"><svg viewBox="0 0 24 24" fill="none" stroke="#5E9440" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.3 12.4l2.6 2.6 4.7-5.2"/></svg></span><span class="nm">Raquel Smith</span>
+              <span class="lvl" style="color:#2F80FA;border-color:#2F80FA;background:#2F80FA1e">PowerHog</span></span>
+            <span class="su"><span class="txt">Pre-offsite hangs in Athens</span><span class="sig changed" data-note="Bet 2: signatures">— “kindness &gt; growth”</span></span>
+            <span class="rp new">3</span>
+            <span class="la">10 days ago · Coua Phang</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st"></span><span class="nm">Paul D'Ambra</span>
+              <span class="lvl" style="color:#B62AD9;border-color:#B62AD9;background:#B62AD91e">TopHog</span></span>
+            <span class="su"><span class="txt">How are you all structuring events for a B2B product?</span></span>
+            <span class="rp new">11</span>
+            <span class="la">a year ago · Webmaster Maggew</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st"></span><span class="nm">Leejoo Hwang</span>
+              <span class="lvl" style="color:#30ABC6;border-color:#30ABC6;background:#30ABC61c">Hogthusiast</span></span>
+            <span class="su"><span class="txt">Anyone put PostHog data straight into their fundraising deck?</span> <span class="sig">— building @tinymetrics</span></span>
+            <span class="rp new">23</span>
+            <span class="la">2 years ago · Ian Vanagas</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st" title="Solved"><svg viewBox="0 0 24 24" fill="none" stroke="#5E9440" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.3 12.4l2.6 2.6 4.7-5.2"/></svg></span><span class="nm">Ada Kreyszig</span>
+              <span class="lvl" style="color:#B62AD9;border-color:#B62AD9;background:#B62AD91e">TopHog</span></span>
+            <span class="su"><span class="txt">Autocapture not firing inside a shadow DOM — fixed it, here's how</span></span>
+            <span class="rp">7</span>
+            <span class="la">3 months ago · Ada K.</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st"></span><span class="nm">Nadia Okoye</span>
+              <span class="lvl" style="color:#6B7280;border-color:#6B7280;background:#6B728018">Hoglet</span></span>
+            <span class="su"><span class="txt">Self-hosting on a Raspberry Pi: how low can the footprint go?</span><span class="sig">— posting from a pi, send help (nicely)</span></span>
+            <span class="rp">9</span>
+            <span class="la">6 hours ago · Nadia Okoye</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st"></span><span class="nm">Marco Silva</span>
+              <span class="lvl" style="color:#30ABC6;border-color:#30ABC6;background:#30ABC61c">Hogthusiast</span></span>
+            <span class="su"><span class="txt">What's your funnel-vs-cohort rule of thumb for activation?</span></span>
+            <span class="rp new">14</span>
+            <span class="la">yesterday · Marco Silva</span>
+          </div>
+
+          <div class="trow">
+            <span class="au"><span class="st"></span><span class="nm">Priya Natarajan</span>
+              <span class="lvl" style="color:#2F80FA;border-color:#2F80FA;background:#2F80FA1e">PowerHog</span></span>
+            <span class="su"><span class="txt">Show &amp; tell: a Grafana-style status board built on HogQL 📊</span></span>
+            <span class="rp">6</span>
+            <span class="la">4 days ago · Priya Natarajan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Hogs desktop widget -->
+    <div class="widget changed" data-note="Bet 2: spotlight contributors (new desktop widget)">
+      <div class="titlebar">
+        <span class="dots"><i style="background:#F54E00"></i><i style="background:#EB9D2A"></i><i style="background:#5E9440"></i></span>
+        <span class="t">🏆 Top hogs this week</span>
+        <span class="ctrls"><span>▢</span><span>✕</span></span>
+      </div>
+      <div class="wbody">
+        <div class="hogs">
+          <div class="hog"><span class="rk">1</span><span class="av" style="background:#F54E00">C</span>
+            <div><div class="who">Cory Watilo <span class="lvl" style="color:#F54E00;border-color:#F54E00;background:#F54E0022">🦔 Hogfather</span></div><div class="sig">“kindness &gt; growth”</div></div><span class="pts">1,910</span></div>
+          <div class="hog"><span class="rk">2</span><span class="av" style="background:#B62AD9">P</span>
+            <div><div class="who">Paul D'Ambra</div><div class="sig">shipping in public, mostly on fire</div></div><span class="pts">240</span></div>
+          <div class="hog"><span class="rk">3</span><span class="av" style="background:#2F80FA">R</span>
+            <div><div class="who">Raquel Smith</div><div class="sig">measure twice, autocapture once</div></div><span class="pts">142</span></div>
+          <div class="hog"><span class="rk">4</span><span class="av" style="background:#30ABC6">L</span>
+            <div><div class="who">Leejoo Hwang</div><div class="sig">building @tinymetrics</div></div><span class="pts">62</span></div>
+        </div>
+        <div class="ladder">
+          <h6>⬆ Climb the ranks</h6>
+          <div class="r"><span class="lvl" style="color:#6B7280;border-color:#6B7280;background:#6B728018">Hoglet</span><span class="th">10</span></div>
+          <div class="r"><span class="lvl" style="color:#30ABC6;border-color:#30ABC6;background:#30ABC61c">Hogthusiast</span><span class="th">50</span></div>
+          <div class="r me"><span class="lvl" style="color:#2F80FA;border-color:#2F80FA;background:#2F80FA1e">PowerHog</span><span class="th">100</span></div>
+          <div class="r"><span class="lvl" style="color:#B62AD9;border-color:#B62AD9;background:#B62AD91e">TopHog</span><span class="th">200</span></div>
+          <div class="r"><span class="lvl" style="color:#F54E00;border-color:#F54E00a0;background:#F54E001c">ElderHog</span><span class="th">400</span></div>
+          <div class="r"><span class="lvl" style="color:#F54E00;border-color:#F54E00;background:#F54E0022">🦔 Hogfather</span><span class="th">750</span></div>
+          <div class="prog"><i></i></div>
+          <div class="you">you're a <b>PowerHog</b> · 38 pts to TopHog</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT DOCK -->
+  <div class="dock">
+    <a class="app"><span class="tile" style="background:#CDE8F2">🤔</span><span>Why PostHog?</span></a>
+    <a class="app"><span class="tile" style="background:#FCE8B2">📓</span><span>Changelog</span></a>
+    <a class="app"><span class="tile" style="background:#D8EFD2">📖</span><span>Company handbook</span></a>
+    <a class="app"><span class="tile" style="background:#E3D6F5">🛍️</span><span>Store</span></a>
+    <a class="app"><span class="tile" style="background:#FBD9C9">💼</span><span>Careers</span></a>
+    <a class="app"><span class="tile" style="background:#DADBD3">🗑️</span><span>Trash</span></a>
+  </div>
+</div>
+
+<div class="review">
+  <span class="flag">◆ concept prototype</span>
+  <label><input type="checkbox" onchange="document.body.classList.toggle('showdiff',this.checked)"> highlight what changed</label>
+</div>
