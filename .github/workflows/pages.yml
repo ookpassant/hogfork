@@ -24,8 +24,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Assemble site
         run: |
-          mkdir -p _site
-          cp prototype/community-redesign.html _site/index.html
+          mkdir -p _site/preview _site/prototype
+          cp index.html _site/index.html
+          cp preview/ships-now.html _site/preview/ships-now.html
+          cp preview/vision.html _site/preview/vision.html
+          cp prototype/community-redesign.html _site/prototype/community-redesign.html
+          touch _site/.nojekyll
       - uses: actions/configure-pages@v5
         with:
           enablement: true
