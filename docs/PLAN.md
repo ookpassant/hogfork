@@ -90,10 +90,14 @@ These are in the vision and the prototype, but they are not frontend-only, so
 they do not ride along in a "just copy and nav" PR. They need a maintainer
 decision before any code.
 
-- **New community boards** (`#build-in-public`, `#war-stories`, `#the-pub`).
+- **New community boards** (`#build-in-public`, `#war-stories`, `#the-lounge`).
   No schema change, but they are new Squeak topics that someone has to create
   in the CMS, name, and agree to moderate. That is a product call, not a diff.
   Proposed in the Discussion, built only if wanted.
+- **Retiring `#devrel`.** It is a real board, so the reorder PR still surfaces
+  it under "Community". Removing or folding it in reads a bit niche up front,
+  but deleting/merging a topic is a Strapi action on their side, not frontend.
+  A suggestion for the Discussion, not part of the PR.
 - **Renaming topic groups** ("Off-topic" to "Community", product topics under
   "Product talk"). The group labels and which topics belong to them are Strapi
   data, not frontend. The frontend can only reorder them and relabel the display
@@ -118,7 +122,7 @@ is on the table for merge. This keeps that honest.
 | Support pointer + search note | forum-refresh PR | Built on branch |
 | Category bars in the list | later PR | Proposed |
 | "Top hogs this week" | later PR | Proposed |
-| `#build-in-public`, `#war-stories`, `#the-pub` | Needs input | Illustrative until agreed |
+| `#build-in-public`, `#war-stories`, `#the-lounge` | Needs input | Illustrative until agreed |
 | "Last post" jump arrow, "who's browsing" footer | none yet | Illustrative flavour, not proposed |
 
 ## Before anything goes public

@@ -15,7 +15,7 @@ Right now the forum is framed like a helpdesk. You "Ask a question," threads car
 Soften the voice from triage to talk, and make it clear this is a community, not a support queue.
 
 - "Ask a question" becomes "Start a discussion." The window title "Questions" becomes "Community discussions."
-- Community boards come first. The ones that already exist (#introductions, #where-in-the-world, #devrel) can lead as-is, pure reorder. A few more (#build-in-public, #war-stories, #the-pub) would give people more reasons to hang around, though those are new topics to set up, so they're a suggestion rather than a PR. Product topics sit just below, under "Product talk."
+- Community boards come first. The ones that already exist (#introductions, #where-in-the-world) can lead as-is, pure reorder. A few more (#build-in-public, #war-stories, #the-lounge) would give people more reasons to hang around, though those are new topics to set up, so they're a suggestion rather than a PR. (#devrel is a real board too, but it reads a bit niche up front, so retiring or folding it in is worth a look, another maintainer call.) Product topics sit just below, under "Product talk."
 - Support gets its own clear door. A gentle line saying that chatting through a bug is welcome, but if you just need it fixed, support lives over there. So the two intents stop competing for the same frame.
 
 ### Bet 2: spotlight the people

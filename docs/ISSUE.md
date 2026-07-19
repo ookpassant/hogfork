@@ -41,9 +41,11 @@ Frontend only, two files (`Inbox/index.tsx`, `useTopicsNav.js`), four commits:
 
 ### Needs a maintainer call first (not frontend only)
 
-- [ ] **New community boards** (#build-in-public, #war-stories, #the-pub): new
+- [ ] **New community boards** (#build-in-public, #war-stories, #the-lounge): new
   Squeak topics to create and moderate. No schema change, but your call on
   names and whether you want them at all.
+- [ ] **Retire #devrel** (or fold it in). It is a real board, so the reorder PR
+  still shows it under "Community"; removing or merging it is a Strapi action.
 - [ ] **Feature-flag gate** so it can be rolled out or turned off remotely.
 - [ ] **Event instrumentation** (discussion started, spotlight clicked).
 
