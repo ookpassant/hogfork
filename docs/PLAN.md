@@ -1,8 +1,9 @@
 # Plan: from concept to contribution
 
 This maps the concept to real posthog.com code and lays out the order to ship
-it. Paths are from PostHog/posthog.com (Gatsby, React, Tailwind). The forum
-runs on their "Squeak" Q&A engine, with data from a Strapi backend.
+it. Paths are from PostHog/posthog.com (Gatsby, React, Tailwind), verified
+against the fork at `master` (commit `5084134`). The forum runs on their
+"Squeak" Q&A engine, with data from a Strapi backend.
 
 ## The flow
 
@@ -43,30 +44,37 @@ From the handbook (developing-the-website):
 
 | Area | Real file(s) |
 | --- | --- |
-| "Ask a question" copy | `src/components/Squeak/components/QuestionForm.tsx` (~L323), `src/components/Questions/QuestionForm.tsx` (label default ~L33) |
-| Question list rows | `src/components/Questions/QuestionsTable.tsx` (the `Row`), `src/components/Squeak/components/Questions.tsx` |
-| Level ladder and badge | `src/components/Squeak/util/getLevel.ts`, `src/components/Squeak/components/LevelBadge.tsx` |
-| Community sidebar and topic order | `src/components/Community/Sidebar` and `src/navs` (`communityMenu`) |
-| Buttons | `src/components/CallToAction` (orange, pressable) |
+| `/questions` "Ask a question" CTA | `src/components/Inbox/index.tsx`: the sidebar button (L127), the ask-window title (L395), and the form's submit button via a local `buttonText` prop on `QuestionForm` (L400). Inbox renders the Squeak `QuestionForm` (import L8) with no override, so the shared default lives at `src/components/Squeak/components/QuestionForm.tsx:323` and is best left alone to avoid touching other surfaces |
+| Window title "Questions" | Not a plain string. Comes from the page's meta/SEO title (`AppWindow` strips `- PostHog`, ~L775); `src/pages/questions/index.tsx` returns `null` and the OS layer injects the app. Changing it is a metadata change, so it is its own PR |
+| Sidebar topic order | `src/navs/useTopicsNav.js`: the `navSorted` array (L7) sets group order; "Latest" is L27. NOT `communityMenu` (that is the site's Community nav). Group labels and topic membership come from Strapi (`allSqueakTopicGroup`) |
+| Question list rows | `src/components/Questions/QuestionsTable.tsx`, `src/components/Questions/TopicsTable.tsx` |
+| Level ladder and badge | `src/components/Squeak/util/getLevel.ts` (Hoglet 10 to Hogfather 750, confirmed), `src/components/Squeak/components/LevelBadge.tsx` |
+| Buttons | `OSButton` (used in Inbox); `src/components/CallToAction` for the orange pressable style |
 
 ## The PRs
 
 Each one stands alone. A maintainer can take the copy change without the nav
 change, or stop after PR2. That is the point of splitting them.
 
-### PR 1: copy only (smallest, safest)
+### PR 1: the ask CTA copy (smallest, safest)
 
-- "Ask a question" becomes "Start a discussion."
-- The window title "Questions" becomes "Community discussions."
-- Nothing else. Pure string changes in the two form files above.
+- "Ask a question" becomes "Start a discussion" on the `/questions` surface:
+  the sidebar button, the ask-window title, and the form's submit button.
+- All three live in `src/components/Inbox/index.tsx`, and the submit button is a
+  local `buttonText` override so the shared `QuestionForm` default (used on other
+  surfaces) is untouched. One file, zero ripple.
+- The "Questions" to "Community discussions" window title is NOT in here. It is
+  a page-metadata change (see the table), so it ships as its own small PR.
 
 ### PR 2: group the existing topics
 
-- Under the sidebar, group the topics that already exist: the three community
-  boards (`#introductions`, `#where-in-the-world`, `#devrel`) lead under a
-  "Community" heading, product topics group under "Product talk."
-- Reorder and heading only, in `communityMenu` / `Sidebar`. No new boards, no
-  data, no schema.
+- Under the sidebar, put the community group first: reorder the `navSorted`
+  array in `src/navs/useTopicsNav.js` so the group holding the community boards
+  (`#introductions`, `#where-in-the-world`, `#devrel`) leads.
+- Reorder only, frontend, no schema. This is the part that is genuinely a diff.
+- Renaming the group to "Community" and grouping product topics under "Product
+  talk" is a **Strapi** change (group labels and membership are backend data),
+  so it moves to "Needs your input first" below, not this PR.
 
 ### PR 3: the support pointer
 
@@ -100,6 +108,10 @@ decision before any code.
   No schema change, but they are new Squeak topics that someone has to create
   in the CMS, name, and agree to moderate. That is a product call, not a diff.
   Proposed in the Discussion, built only if wanted.
+- **Renaming topic groups** ("Off-topic" to "Community", product topics under
+  "Product talk"). The group labels and which topics belong to them are Strapi
+  data, not frontend. The frontend can only reorder them (PR 2). Renaming is a
+  CMS edit on their side.
 - **Feature-flag gating.** Roll the change out or turn it off remotely with
   PostHog's own flags. Worth doing, needs a flag set up on their side.
 - **Event instrumentation.** Track a discussion started, a spotlight clicked.
@@ -112,8 +124,9 @@ is on the table for merge. This keeps that honest.
 
 | In the prototype | Maps to | Status |
 | --- | --- | --- |
-| "Start a discussion", "Community discussions" | PR 1 | Proposed |
-| Community-first sidebar grouping | PR 2 | Proposed (existing boards only) |
+| "Start a discussion" ask CTA | PR 1 | Proposed |
+| "Community discussions" window title | own PR | Proposed (page metadata) |
+| Community-first sidebar order | PR 2 | Proposed (reorder only; rename needs Strapi) |
 | Support pointer + search note | PR 3 | Proposed |
 | Category bars in the list | PR 4 | Proposed |
 | "Top hogs this week" | PR 5 | Proposed |
