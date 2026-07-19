@@ -4,41 +4,47 @@ A little workspace for reimagining the PostHog community forum ([posthog.com/que
 
 The idea is simple. Move it from feeling like a support desk toward feeling like a community, and turn that into a real contribution back to [PostHog/posthog.com](https://github.com/PostHog/posthog.com).
 
-I kept this separate from my other work on purpose. It holds the design concept, the thinking behind it, and the draft changes. The actual pull request will come from a proper fork of posthog.com, since GitHub only lets you open one between a fork and its upstream.
+I kept this separate from my other work on purpose. It holds the design concept, the thinking, and the previews. The actual code change lives on a fork and is now an open pull request.
 
-## The idea
+## The PR (open)
 
-Right now the forum is framed like a helpdesk. You "Ask a question," threads carry statuses like needs-response, and product topics lead. That works for triage. But the communities that really stick feel like a place you belong to, and that's the part I want to bring forward. Two small moves do most of the work, and neither one needs a backend change.
+A small, frontend-only pass on `/questions`. Two files (`src/components/Inbox/index.tsx`, `src/navs/useTopicsNav.js`). No backend, schema, or data changes.
 
-### Bet 1: grow the conversation
+**[PostHog/posthog.com#18683](https://github.com/PostHog/posthog.com/pull/18683)** (draft)
 
-Soften the voice from triage to talk, and make it clear this is a community, not a support queue.
+- "Ask a question" becomes "Start a discussion": the sidebar button, the ask-window title, and the form's submit button (a local `buttonText` so the shared form on other pages is untouched).
+- The forum index title "Forums" becomes "Community discussions." Topic and question pages keep their own titles.
+- Community topics lead the sidebar: the group holding #introductions, #where-in-the-world and #devrel is reordered to the top and shown as "Community." Sorting still keys off the raw Strapi label, so the CMS is unchanged.
+- A support pointer in the sidebar footer: chatting through a bug is welcome, but if you just need it fixed it links to /talk-to-a-human, with a nudge that a quick search may beat a new post.
 
-- "Ask a question" becomes "Start a discussion." The window title "Questions" becomes "Community discussions."
-- Community boards come first: #introductions, #build-in-public, #war-stories, #where-in-the-world, #the-pub. Product topics sit just below, under "Product talk."
-- Support gets its own clear door. A gentle line saying that chatting through a bug is welcome, but if you just need it fixed, support lives over there. So the two intents stop competing for the same frame.
+## The bigger vision (not in the PR)
 
-### Bet 2: spotlight the people
+The prototype and previews gesture at where this could go. These need a maintainer's call, so they are deliberately out of the copy PR:
 
-PostHog already ships a contributor level ladder. It's just hidden. Hoglet, Hogthusiast, PowerHog, TopHog, ElderHog, Hogfather (see `src/components/Squeak/util/getLevel.ts`). The badge shows up inside a thread, but nowhere you'd really notice.
+- **New community boards** (#build-in-public, #war-stories, #the-lounge). New Squeak topics that someone has to create in the CMS. (#devrel is a real board too, but reads a bit niche up front, so retiring or folding it in is worth a look.)
+- **Spotlight the people.** PostHog already ships a hidden contributor level ladder: Hoglet, Hogthusiast, PowerHog, TopHog, ElderHog, Hogfather (`src/components/Squeak/util/getLevel.ts`). A "Top hogs" spotlight would bring it into view, using points that already exist.
 
-- Rank stays out of the topic list, the way the old forums did it. Your rank lived under your avatar in a post, never in the index. Names stay clean.
-- A "Top hogs this week" spotlight brings the ladder into view (name, rank, points) so the people who help actually get seen. It leans on points that already exist in the code.
+## See it
 
-### The look
+Live preview site: **https://ookpassant.github.io/hogfork/**
 
-I leaned on what made the early-2000s boards feel like a place, rebuilt in PostHog's current look (the PostHog OS window, the cream and orange, the real level colours). Coloured category bars, folder icons, a "last post" jump arrow, and a "who's browsing" footer.
+- **The PR, on the real design** — the shipping change applied to posthog.com's actual forum page.
+- **The bigger wishlist** — the same, plus the proposed new boards.
+- **A ProBoards wildcard** — the whole forum reskinned as a navigable 2004-era board, just for fun.
 
-## The prototype
+Everything on the preview site is a prototype with made-up sample content, clearly flagged as not the real posthog.com.
 
-[`prototype/community-redesign.html`](prototype/community-redesign.html) is a self-contained concept. Open it in a browser. There's a "highlight what changed" toggle so you can see exactly what's touched against the live page. Everything in it (names, posts, points) is made-up sample data.
+## Building the real change
+
+The fork builds with pnpm (Node 22): `pnpm install && pnpm start` for dev, `pnpm build:minimal` for a quick build check. The copy and nav change typechecks clean (`tsc`) and lints clean (`eslint`) on the two files, and the branch is rebased on current upstream master so it merges without conflicts.
 
 ## Status
 
 - [x] Explore the real forum and its Squeak components
-- [x] Concept prototype on the real PostHog OS layout
-- [ ] Lock the scope (see [`docs/PLAN.md`](docs/PLAN.md))
-- [ ] Fork posthog.com, build the diff, keep `npm run build` green
-- [ ] Open the PR
+- [x] Concept prototype and previews on the real PostHog OS layout
+- [x] Build the copy and nav change on a fork, verify it typechecks and lints
+- [x] Open the PR (draft): [#18683](https://github.com/PostHog/posthog.com/pull/18683)
+- [ ] A maintainer approves the workflows so CI and the Vercel preview run
+- [ ] Add before/after screenshots, then flip the PR from draft to ready for review
 
-See [`docs/PLAN.md`](docs/PLAN.md) for how each change maps to the real posthog.com code, and the order I'd ship them in.
+The plan, the PR draft, and the discussion notes live under [`docs/`](docs/) on the `community-redesign` branch.
