@@ -6,48 +6,31 @@
 
 ---
 
-**Title:** Community: soften /questions from support desk toward community (copy + nav)
+**Title:** Make /questions read more like a community, less like a support desk
 
 ---
 
 ## Changes
 
-A small, frontend-only pass to make /questions read a bit more like a community
-and less like a support queue. No backend, schema, or data changes. Copy and nav
-order only. Two files, `src/components/Inbox/index.tsx` and
-`src/navs/useTopicsNav.js`.
+Small frontend-only pass. Copy and nav order, two files (`src/components/Inbox/index.tsx`, `src/navs/useTopicsNav.js`). No backend, schema, or data changes.
 
-- **Reframe the ask CTA.** "Ask a question" becomes "Start a discussion": the
-  sidebar button, the window title when the form opens, and the form's submit
-  button (a local `buttonText` so the shared `QuestionForm` used on other
-  surfaces is untouched).
-- **Title the forum window "Community discussions."** The /questions index title
-  (`'Forums'`) becomes "Community discussions." Topic and question pages keep
-  their own titles.
-- **Lead the sidebar with the community group.** Reorder the topic-group nav so
-  the group holding #introductions, #where-in-the-world and #devrel comes first,
-  shown as "Community." Sorting still keys off the raw Strapi label, so the CMS
-  group is unchanged.
-- **Add a support pointer.** A small sidebar footer: chatting through a bug is
-  welcome here, but if you just need it fixed it links to /talk-to-a-human.
-  Paired with a nudge that a lot of questions already have answers, so search may
-  beat a new post. This keeps solved answers easy to find and stops the community
-  and support intents from competing for the same frame.
+- "Ask a question" → "Start a discussion" – sidebar button, window title on the form, and the submit button. Uses a local `buttonText` so the shared `QuestionForm` on docs pages is untouched.
+- Forum window title "Forums" → "Community discussions" – index only. Topic and question pages keep their own titles.
+- Community topics first – reordered the topic-group nav so the group holding #introductions, #where-in-the-world, and #devrel leads, shown as "Community." Sorting still keys off the raw Strapi label, so nothing changes in the CMS.
+- Support pointer in the sidebar footer – chatting through a bug is welcome here, but if you just need it fixed → /talk-to-a-human. Plus a nudge that search might beat a new post, since a lot of questions already have answers.
 
-This is deliberately the smallest, safest slice. The bigger ideas it gestures at
-— new community boards, a contributor spotlight, grouping the question list — are
-for a separate Discussion, not this PR. There's a clickable concept showing where
-it could go: [prototype link]. Happy to split any of these four out or drop them.
+Why: the handbook says community ≠ support, but /questions currently asks people to... ask a question. This smells like support. This is the smallest move toward shifting that – see a clickable (kinda) concept of where it could go, see new boards! See moved topics! Note the support topic at the bottom of the board list! https://ookpassant.github.io/hogfork/
 
-*Screenshots: the changes are copy and nav on the existing PostHog OS forum
-layout. The prototype above shows the intended feel with a "highlight what
-changed" toggle. I can add real screenshots from the Vercel preview once this is
-open.*
+Happy to split any of these four out, or drop them.
+
+## Screenshots
+
+Copy + nav on the existing layout – will add before/after from the Vercel preview once it builds.
 
 ## Checklist
 
-- [x] I've read the [docs](https://posthog.com/handbook/wizard-and-docs/docs-style-guide) and/or [content](https://posthog.com/handbook/content/posthog-style-guide) style guides.
+- [x] I've read the [docs](https://posthog.com/handbook/wizard-and-docs/docs-style-guide) / [content](https://posthog.com/handbook/content/posthog-style-guide) style guides
 - [x] Words are spelled using American English
-- [x] Use relative URLs for internal links
-- [ ] I've checked the pages added or changed in the Vercel preview build (will do once the PR is open, since the preview builds on PR)
-- [ ] If I moved a page, I added a redirect in `vercel.json` (N/A, no pages moved)
+- [x] Relative URLs for internal links
+- [ ] Checked the changed pages in the Vercel preview build (will do once it builds on open)
+- [ ] N/A – no pages moved, no redirects needed
