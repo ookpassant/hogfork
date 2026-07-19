@@ -1,7 +1,7 @@
 # DRAFT: tracking issue for PostHog/posthog.com
 
-> Open this once the direction has a nod (or alongside PR 1 if you'd rather just
-> ship and talk). It keeps the scope in one place and lets each PR close a box.
+> Open this once the direction has a nod (or alongside the forum-refresh PR if
+> you'd rather just ship and talk). It keeps the scope in one place.
 
 ---
 
@@ -19,15 +19,22 @@ The forum's job of surfacing solved bugs and answered questions stays intact.
 None of this hides existing answers or touches the support flow; the topic
 search stays put so people can find what already exists.
 
-### Ships now (frontend only, each its own PR)
+### The forum-refresh PR (branch `community/forum-refresh`, one PR) [PR link]
 
-- [ ] **Copy:** "Ask a question" to "Start a discussion"; window title
-  "Questions" to "Community discussions". (`QuestionForm.tsx` x2) [PR link]
-- [ ] **Grouping:** existing topics grouped, community boards
-  (#introductions, #where-in-the-world, #devrel) lead under "Community",
-  product topics under "Product talk". Reorder only. (`communityMenu` / `Sidebar`)
-- [ ] **Support pointer:** a "chat a bug here, but for a fix support's over
-  there" line, plus a nudge to search existing discussions first. (copy)
+Frontend only, two files (`Inbox/index.tsx`, `useTopicsNav.js`), four commits:
+
+- [ ] **Ask CTA:** "Ask a question" to "Start a discussion" (button, ask-window
+  title, and the form submit via a local `buttonText` override).
+- [ ] **Forum window title:** the /questions index title "Forums" to "Community
+  discussions" (`Inbox/index.tsx:563`).
+- [ ] **Sidebar order + label:** the community group (#introductions,
+  #where-in-the-world, #devrel) leads, shown as "Community" via a frontend
+  display override. Reorder + relabel only; the Strapi group is unchanged.
+- [ ] **Support pointer:** a "chat a bug here, but for a fix talk to a human"
+  footer, plus a nudge to search first.
+
+### Bigger, as their own PRs later
+
 - [ ] **Category grouping** in the question list, presentational. (`QuestionsTable.tsx`)
 - [ ] **"Top hogs" spotlight:** top contributors by existing points and levels.
   (`getLevel.ts`)
@@ -42,5 +49,6 @@ search stays put so people can find what already exists.
 
 ### Notes
 
-- Each "ships now" box is a standalone PR. Merge or close them independently.
-- `npm run build` stays green on every PR.
+- The four boxes above ship as one PR (`community/forum-refresh`); the bigger two
+  are separate PRs later.
+- `pnpm build:minimal` stays green on every PR.
