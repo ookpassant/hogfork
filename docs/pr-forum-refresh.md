@@ -34,8 +34,10 @@ order only. Two files, `src/components/Inbox/index.tsx` and
   beat a new post. This keeps solved answers easy to find and stops the community
   and support intents from competing for the same frame.
 
-Context: this comes with a clickable concept and a short write-up. [prototype
-link]. Happy to split any of these out or drop them.
+This is deliberately the smallest, safest slice. The bigger ideas it gestures at
+— new community boards, a contributor spotlight, grouping the question list — are
+for a separate Discussion, not this PR. There's a clickable concept showing where
+it could go: [prototype link]. Happy to split any of these four out or drop them.
 
 *Screenshots: the changes are copy and nav on the existing PostHog OS forum
 layout. The prototype above shows the intended feel with a "highlight what
