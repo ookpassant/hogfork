@@ -28,7 +28,6 @@ jobs:
           cp index.html _site/index.html
           cp preview/ships-now.html _site/preview/ships-now.html
           cp preview/vision.html _site/preview/vision.html
-          cp preview/hn.html _site/preview/hn.html
           cp prototype/community-redesign.html _site/prototype/community-redesign.html
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5
