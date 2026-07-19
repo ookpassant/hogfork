@@ -105,7 +105,7 @@ function av(name,color){var i=name.replace(/[^A-Za-z ]/g,'').split(' ').map(func
 function col(name){var h=0;for(var i=0;i<name.length;i++)h=(h*31+name.charCodeAt(i))>>>0;var C=['#e8863a','#c0417a','#3f7fb0','#5e9440','#7a5cc0','#b0603f','#2f8f8f','#c08a2f','#4a6ea0'];return C[h%C.length];}
 function stats(b){var posts=0;b.topics.forEach(function(t){posts+=1+t.replies;});return {topics:b.topics.length,posts:posts,last:b.topics[0]};}
 function mast(){return '<div class="pb-mast"><div class="pb-logo">🦔 PostHog Community</div><div class="pb-tag">a cozy corner of the internet · est. 2026</div></div>';}
-function foot(){return '<div class="pb-foot">'+Object.keys(DATA.boards).length+' boards · lots of threads · newest member: <a href="#">nadiaokoye</a> · <b>3</b> guests browsing<br><span>Powered by hedgehogs (and definitely, legally, not ProBoards™)</span></div>';}
+function foot(){return '<div class="pb-foot">'+Object.keys(DATA.boards).length+' boards · lots of threads · newest member: <a href="#">nadiaokoye</a> · <b>3</b> guests browsing<br><span>Powered by hedgehogs (not ProBoards™). Every thread, member &amp; number here is invented — I had Claude make up a whole fake forum\u2019s worth of content. None of it is real.</span></div>';}
 
 function viewIndex(){
   var h=mast()+'<div class="pb-crumb"><b>PostHog Community</b></div><div class="pb-toolbar"><span style="font-size:11px;color:#556">Welcome, guest! <a href="#">Login</a> · <a href="#">Register</a></span><span class="pb-pages">🔍 <a href="#">Search</a></span></div><table class="pb-tbl">';
