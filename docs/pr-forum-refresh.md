@@ -21,7 +21,7 @@ Small frontend-only pass. Copy and nav order, two files (`src/components/Inbox/i
 
 Why: the handbook says community ≠ support, but /questions currently asks people to... ask a question. This smells like support. This is the smallest move toward shifting that – see a clickable (kinda) concept of where it could go, see new boards! See moved topics! Note the support topic at the bottom of the board list! https://ookpassant.github.io/hogfork/
 
-(There's also a wildcard in there where I reskinned the whole forum as an old-school ProBoards board – 2004 forum energy, folder icons, fully clickable through boards and threads. Purely for fun... but honestly, kind of on theme? Have a click.)
+(There's also a wildcard in there where I reskinned the whole forum as an old-school ProBoards board (: – 2004 forum nostalgia, folder icons etc. Purely for fun... or is it?)
 
 Happy to split any of these four out, or drop them.
 
