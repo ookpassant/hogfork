@@ -3,54 +3,127 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hogfork — PostHog community forum concept</title>
+<title>Choose your forum — hogfork</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-  :root { color-scheme: light dark; }
-  * { box-sizing: border-box; }
-  body { margin:0; font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
-         background:#f6f6f1; color:#23251d; }
-  @media (prefers-color-scheme: dark){ body{ background:#1d1f1b; color:#ecece4; } .card{ background:#26282320 !important; border-color:#ffffff1a !important;} }
-  .banner { background:#7a1500; color:#fff; text-align:center; padding:9px 14px; font-weight:600; font-size:14px; }
-  .banner a { color:#fff; }
-  .wrap { max-width:820px; margin:0 auto; padding:40px 20px 64px; }
-  h1 { font-size:28px; margin:0 0 6px; }
-  .sub { color:#73756b; margin:0 0 28px; }
-  .card { display:block; text-decoration:none; color:inherit; border:1px solid #e1e2dc; border-radius:12px;
-          padding:18px 20px; margin:14px 0; background:#fff; transition:transform .08s ease, box-shadow .08s ease; }
-  .card:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(0,0,0,.08); }
-  .card h2 { margin:0 0 4px; font-size:18px; color:#f54e00; }
-  .card p { margin:0; color:#73756b; font-size:14.5px; }
-  .tag { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
-         padding:2px 8px; border-radius:999px; margin-left:8px; vertical-align:middle; }
-  .tag.ship { background:#5e944020; color:#3f7020; }
-  .tag.vision { background:#f54e0018; color:#f54e00; }
-  .tag.wild { background:#3f669922; color:#294a73; }
-  footer { color:#9ea096; font-size:13px; margin-top:32px; }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    color:#22252b; min-height:100vh;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, #bfe3ff 0%, #bfe3ff 30%, rgba(191,227,255,0) 70%),
+      linear-gradient(#dff1ff 0%, #eaf7e6 46%, #cdeab0 62%, #b6df93 100%);
+  }
+  .pixel{font-family:"Press Start 2P","Courier New",monospace}
+  .banner{background:#7a1500;color:#fff;text-align:center;padding:9px 14px;font-weight:700;font-size:13.5px}
+  .banner a{color:#fff}
+  .wrap{max-width:1000px;margin:0 auto;padding:30px 18px 60px}
+
+  .titlebar{display:flex;align-items:center;justify-content:center;gap:16px;margin:6px 0 4px;text-align:center}
+  .titlebar h1{font-size:19px;line-height:1.5;margin:0;color:#1b2733;text-shadow:2px 2px 0 #fff,4px 4px 0 rgba(0,0,0,.12)}
+  .prof{max-width:640px;margin:14px auto 26px;text-align:center;color:#3f4a45;font-size:16px;line-height:1.6;font-weight:600}
+  .prof b{color:#e8562a}
+
+  /* pokeball */
+  .pokeball{width:44px;height:44px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(#ee1515 0 47%, #202020 47% 53%, #f6f6f6 53% 100%);
+    border:4px solid #202020;position:relative;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+  .pokeball::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:13px;height:13px;border-radius:50%;background:#fff;border:4px solid #202020}
+  .pokeball.sm{width:26px;height:26px;border-width:3px;box-shadow:none}
+  .pokeball.sm::after{width:8px;height:8px;border-width:2px}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+  @media(max-width:820px){.cards{grid-template-columns:1fr}}
+
+  .card{position:relative;background:#fff;border:4px solid #2b2f38;border-radius:16px;
+    box-shadow:0 6px 0 #2b2f38;padding:18px 18px 20px;transition:transform .08s ease, box-shadow .08s ease;
+    display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-4px);box-shadow:0 10px 0 #2b2f38}
+  .card .cover{position:absolute;inset:0;z-index:1;border-radius:12px}
+  .card>*{position:relative;z-index:2;pointer-events:none}
+  .card .cover, .card a.btn{pointer-events:auto}
+
+  .type{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+    font-size:11px;letter-spacing:.5px;color:#fff;padding:6px 10px;border-radius:999px;margin-bottom:10px}
+  .type.real{background:#e8a400}
+  .type.dream{background:#8a5cd0}
+  .type.retro{background:#3f77c4}
+  .card h2{margin:2px 0 8px;font-size:19px;color:#1b2733}
+  .card p{margin:0;color:#5a6570;font-size:14.5px;line-height:1.55;flex:1}
+  .card .foot{margin-top:14px;font-weight:800;color:#2b6cb0;font-size:14px}
+
+  /* the PR card — the canonical pick */
+  .card.pr{border-color:#e8562a;box-shadow:0 6px 0 #b83f16;transform:scale(1.02)}
+  .card.pr:hover{box-shadow:0 11px 0 #b83f16;transform:scale(1.02) translateY(-4px)}
+  .card.pr::before{content:"";position:absolute;inset:-4px;border-radius:18px;z-index:0;pointer-events:none;
+    background:linear-gradient(120deg,#ffd75e,#ff7a3d,#ffd75e,#ff7a3d);background-size:300% 300%;
+    filter:blur(7px);opacity:.55;animation:shine 3s linear infinite}
+  @keyframes shine{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+  .ribbon{position:absolute;top:-16px;left:50%;transform:translateX(-50%);z-index:3;
+    background:#e8562a;color:#fff;font-size:11px;letter-spacing:.5px;padding:7px 14px;border-radius:999px;
+    border:3px solid #fff;box-shadow:0 3px 0 rgba(0,0,0,.2);white-space:nowrap}
+  .card.pr a.btn{display:inline-block;margin-top:12px;background:#e8562a;color:#fff;font-weight:800;font-size:13px;
+    padding:9px 14px;border-radius:10px;text-decoration:none;border:3px solid #b83f16;box-shadow:0 3px 0 #8f3011}
+  .card.pr a.btn:hover{transform:translateY(-1px)}
+
+  .dialog{position:relative;margin:34px auto 0;max-width:760px;background:#fff;border:4px solid #2b2f38;
+    border-radius:12px;box-shadow:0 5px 0 #2b2f38;padding:18px 20px;font-size:16px;line-height:1.6;color:#2b2f38;font-weight:600}
+  .dialog::before{content:"";position:absolute;inset:5px;border:2px solid #6a90c0;border-radius:8px;pointer-events:none}
+  .dialog .arrow{position:absolute;right:16px;bottom:10px;color:#2b6cb0;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  .note{max-width:760px;margin:22px auto 0;text-align:center;color:#5a6570;font-size:13px;line-height:1.5;font-weight:600}
+  footer{text-align:center;color:#4a5c40;font-size:13px;margin-top:14px;font-weight:700}
 </style>
 </head>
 <body>
   <div class="banner"><a href="https://posthog.com/questions"><b>PostHog.com</b></a> is not here. this is someone's random github pages prototype.</div>
   <div class="wrap">
-    <h1>More like a community, less like a support desk.</h1>
-    <p class="sub">Little forum overhauls to make it feel more like a home and less like a support queue. The small thing I'd ship tomorrow (button change, support add, board re-order), plus the bigger wishlist it points at (things need making on the backend to make the new boards).</p>
 
-    <a class="card" href="preview/ships-now.html">
-      <h2>The bit I'd ship first <span class="tag ship">ships now</span></h2>
-      <p>Tiny copy and nav changes on the real forum: "Start a discussion" instead of "Ask a question," community boards up top, a pointer to the humans when you just need a fix. This one's <a href="https://github.com/PostHog/posthog.com/pull/18683">the open PR</a>.</p>
-    </a>
+    <div class="titlebar">
+      <span class="pokeball"></span>
+      <h1 class="pixel">CHOOSE YOUR FORUM</h1>
+      <span class="pokeball"></span>
+    </div>
+    <p class="prof">Prof. Hog: three of them turned up. One's <b>real</b>, one's a daydream, one's... nostalgic. Go on — have a click.</p>
 
-    <a class="card" href="preview/vision.html">
-      <h2>The bigger wishlist <span class="tag vision">wishlist</span></h2>
-      <p>Same, plus actual places to hang out: #build-in-public, #war-stories, #the-lounge. PostHog would have to spin those up, so. Wishlist for now.</p>
-    </a>
+    <div class="cards">
 
-    <a class="card" href="preview/pb.html">
-      <h2>The wildcard <span class="tag wild">just ship this one instead</span></h2>
-      <p>What if the forum were an old-school ProBoards? Same posthog page, 2004 forum energy - blue gradients, folder icons, "Started by / Replies / Views / Last Post." Familiar AND on theme. (Click through the boards!)</p>
-    </a>
+      <div class="card pr">
+        <div class="ribbon pixel">★ THIS ONE'S THE PR</div>
+        <a class="cover" href="preview/ships-now.html" aria-label="Open the ships-now preview"></a>
+        <span class="type real"><span class="pokeball sm"></span> ships now</span>
+        <h2>The bit I'd ship first</h2>
+        <p>Tiny copy and nav changes on the real forum: "Start a discussion" instead of "Ask a question," community boards up top, a pointer to the humans when you just need a fix. <b>This is the actual open pull request.</b></p>
+        <a class="btn" href="https://github.com/PostHog/posthog.com/pull/18683">→ Open PR #18683</a>
+        <div class="foot">or click the card to preview it →</div>
+      </div>
 
-    <p style="color:#9ea096;font-size:13px;margin-top:26px;line-height:1.5">I had Claude make up a bunch of content for this so its a bit more clickable...</p>
+      <div class="card">
+        <a class="cover" href="preview/vision.html" aria-label="Open the wishlist preview"></a>
+        <span class="type dream"><span class="pokeball sm"></span> wishlist</span>
+        <h2>The bigger wishlist</h2>
+        <p>Same, plus actual places to hang out: #build-in-public, #war-stories, #the-lounge. PostHog would have to spin those up, so. Wishlist for now.</p>
+        <div class="foot">click to preview →</div>
+      </div>
 
+      <div class="card">
+        <a class="cover" href="preview/pb.html" aria-label="Open the ProBoards wildcard preview"></a>
+        <span class="type retro"><span class="pokeball sm"></span> just for fun</span>
+        <h2>The wildcard</h2>
+        <p>What if the forum were an old-school ProBoards? 2004 forum nostalgia, folder icons, fully clickable through boards and threads. Purely for fun... or is it?</p>
+        <div class="foot">click to preview →</div>
+      </div>
+
+    </div>
+
+    <div class="dialog">PROF. HOG: pick as many as you like — it's a website, not the Kanto region. <span class="arrow">▾</span></div>
+
+    <p class="note">I had Claude make up a bunch of content for this so its a bit more clickable...</p>
     <footer>Not affiliated, not endorsed. (Yet.) 🦔</footer>
   </div>
 </body>
