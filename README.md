@@ -30,7 +30,7 @@ Live preview site: **https://ookpassant.github.io/hogfork/**
 
 - **The PR, on the real design** — the shipping change applied to posthog.com's actual forum page.
 - **The bigger wishlist** — the same, plus the proposed new boards.
-- **A ProBoards wildcard** — the whole forum reskinned as a navigable 2004-era board, just for fun.
+- **A ProBoards wildcard** — the whole forum reskinned as a navigable 2004-era board. Now real code, too: an open PR on the fork ([ookpassant/posthog.com#1](https://github.com/ookpassant/posthog.com/pull/1)).
 
 Everything on the preview site is a prototype with made-up sample content, clearly flagged as not the real posthog.com.
 
